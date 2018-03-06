@@ -1,0 +1,18 @@
+{
+  "development": {
+    "url": "postgres://postgres:password@localhost:5432/sql_ztm_dev",
+    "dialect": "postgres"
+  },
+  "test": {
+    "url": "postgres://postgres:password@localhost:5432/sql_ztm_test",
+    "dialect": "postgres"
+  },
+  "staging": {
+    "url": "postgres://postgres:password@localhost:5432/sql_ztm_staging",
+    "dialect": "postgres"
+  },
+  "production": {
+    "url": "postgres://postgres:password@localhost:5432/sql_ztm_production",
+    "dialect": "postgres"
+  }
+}
