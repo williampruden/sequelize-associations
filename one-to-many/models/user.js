@@ -21,8 +21,8 @@ module.exports = function(sequelize, DataTypes) {
       }
     }
   }, {
-    paranoid: true
-  });
+  paranoid: true
+});
 
   User.associate = (models) => {
     User.hasMany(models.Task, {
@@ -30,10 +30,8 @@ module.exports = function(sequelize, DataTypes) {
         name: 'userId',
         allowNull: false
       },
-      as: 'tasks',
-      onDelete: 'CASCADE'
+      as: 'tasks'
     });
-    
   };
 
   return User;
