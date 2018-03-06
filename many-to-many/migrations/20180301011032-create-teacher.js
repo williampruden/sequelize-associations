@@ -1,18 +1,28 @@
 'use strict';
 module.exports = {
   up: function(queryInterface, Sequelize) {
-    return queryInterface.createTable('Tasks', {
+    return queryInterface.createTable('Teachers', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      title: {
-        type: Sequelize.STRING
+      firstName: {
+        type: DataTypes.STRING,
+        allowNull: false
       },
-      complete: {
-        type: Sequelize.BOOLEAN
+      lastName: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
+      subject: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
+      numberOfClasses: {
+        type: DataTypes.INTEGER,
+        allowNull: false
       },
       createdAt: {
         allowNull: false,
@@ -25,19 +35,10 @@ module.exports = {
       deletedAt: {
         allowNull: true,
         type: Sequelize.DATE
-      },
-      userId: {
-        type: Sequelize.INTEGER,
-        onDelete: 'CASCADE',
-        references: {
-          model: 'Users',
-          key: 'id',
-          as: 'userId'
-        }
       }
     });
   },
   down: function(queryInterface, Sequelize) {
-    return queryInterface.dropTable('Tasks');
+    return queryInterface.dropTable('Teachers');
   }
 };

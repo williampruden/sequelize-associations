@@ -2,8 +2,8 @@ const { User, Task } = require('../models/')
 
 function index(req,res) {
   Task.findAll()
-  .then((user) => {
-    return res.status(200).json(user)
+  .then((task) => {
+    return res.status(200).json(task)
   })
   .catch((error) => {
     return res.status(400).json(error)
@@ -16,8 +16,8 @@ function create(req,res) {
     complete: false,
     userId: req.body.userId
   })
-  .then((user) => {
-    return res.status(200).json(user)
+  .then((task) => {
+    return res.status(200).json(task)
   })
   .catch((error) => {
     return res.status(400).json(error)

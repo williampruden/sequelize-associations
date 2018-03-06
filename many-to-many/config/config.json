@@ -1,18 +1,18 @@
 {
   "development": {
-    "url": "postgres://postgres:password@localhost:5432/sql_otm_dev",
+    "url": "postgres://postgres:password@localhost:5432/sql_mtm_dev",
     "dialect": "postgres"
   },
   "test": {
-    "url": "postgres://postgres:password@localhost:5432/sql_otm_test",
+    "url": "postgres://postgres:password@localhost:5432/sql_mtm_test",
     "dialect": "postgres"
   },
   "staging": {
-    "url": "postgres://postgres:password@localhost:5432/sql_otm_staging",
+    "url": "postgres://postgres:password@localhost:5432/sql_mtm_staging",
     "dialect": "postgres"
   },
   "production": {
-    "url": "postgres://postgres:password@localhost:5432/sql_otm_production",
+    "url": "postgres://postgres:password@localhost:5432/sql_mtm_production",
     "dialect": "postgres"
   }
 }

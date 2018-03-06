@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   up: function(queryInterface, Sequelize) {
-    return queryInterface.createTable('Users', {
+    return queryInterface.createTable('Students', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -9,20 +9,20 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       firstName: {
-        type: Sequelize.STRING
+        type: DataTypes.STRING,
+        allowNull: false
       },
       lastName: {
-        type: Sequelize.STRING
+        type: DataTypes.STRING,
+        allowNull: false
       },
-      email: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        validate: {
-          isEmail : true
-        }
+      gradeLevel: {
+        type: DataTypes.INTEGER,
+        allowNull: false
       },
-      bio: {
-        type: Sequelize.TEXT
+      gpa: {
+        type: DataTypes.INTEGER,
+        allowNull: false
       },
       createdAt: {
         allowNull: false,
@@ -39,6 +39,6 @@ module.exports = {
     });
   },
   down: function(queryInterface, Sequelize) {
-    return queryInterface.dropTable('Users');
+    return queryInterface.dropTable('Students');
   }
 };
