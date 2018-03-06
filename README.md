@@ -1,5 +1,6 @@
 # Sequelize Version 4 Association Examples
 
+### Sequelize
 Sequelize is currently the only ORM for Node for people interested in working with relational databases. While the technology is helpful the documentation and community generated tutorials can often be confusing. This repo is an attempt at showing concrete examples of how the ORM works with defining associations and querying based on those associations.
 
 - I've chosen to use a PostgreSQL DB for these examples but Sequelize does offer support for [other DBs](http://docs.sequelizejs.com/manual/installation/getting-started.html) as well:
@@ -17,6 +18,7 @@ Sequelize is currently the only ORM for Node for people interested in working wi
   - one-to-many
   - many-to-many
 
+### Sequelize-CLI
 I've installed the [Sequelize CLI](https://github.com/sequelize/cli) globally on my local machine and recommend it as it helps speed up development. The docs here are quite helpful.
 
 Running the `sequelize init` command boiler plates out quite a few folders/files for you.
