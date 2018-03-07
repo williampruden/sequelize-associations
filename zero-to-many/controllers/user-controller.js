@@ -45,7 +45,7 @@ function show(req,res) {
       return res.status(200).json(user);
     })
     .catch((error) => {
-      res.status(400).json(error)
+      return res.status(400).json(error)
     });
 }
 
@@ -56,19 +56,19 @@ function update(req,res) {
         return res.status(404).json({ message: 'User Not Found' });
       }
 
-      return user.update({
-          ...user, //spread out existing user
-          ...req.body //spread out req.body - the differences in the body will override the user returned from DB.
-        })
-        .then((user) => {
-          res.status(200).json(user)
-        })
-        .catch((error) => {
-          res.status(400).json(error)
-        });
+      user.update({
+        ...user, //spread out existing user
+        ...req.body //spread out req.body - the differences in the body will override the user returned from DB.
+      })
+      .then((updatedUser) => {
+        return res.status(200).json(updatedUser)
+      })
+      .catch((error) => {
+        return res.status(400).json(error)
+      });
     })
     .catch((error) => {
-      res.status(400).json(error)
+      return res.status(400).json(error)
     });
 }
 
@@ -78,16 +78,17 @@ function destroy(req,res) {
       if (!user) {
         return res.status(400).json({ message: 'User Not Found' });
       }
-      return user.destroy()
+
+      user.destroy()
         .then((user) => {
-          res.status(200).json(user)
+          return res.status(200).json(user)
         })
         .catch((error) => {
-          res.status(400).json(error)
+          return res.status(400).json(error)
         });
     })
     .catch((error) => {
-      res.status(400).json(error)
+      return res.status(400).json(error)
     });
 }
 

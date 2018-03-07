@@ -45,16 +45,16 @@ function update(req,res) {
         return res.status(404).json({ message: 'Project Not Found' });
       }
 
-      return project.update({
-          ...project, //spread out existing project
-          ...req.body //spread out body - the differences in the body will over ride the project returned from DB.
-        })
-        .then((updatedProject) => {
-          return res.status(200).json(updatedProject)
-        })
-        .catch((error) => {
-          return res.status(400).json(error)
-        });
+      project.update({
+        ...project, //spread out existing project
+        ...req.body //spread out body - the differences in the body will over ride the project returned from DB.
+      })
+      .then((updatedProject) => {
+        return res.status(200).json(updatedProject)
+      })
+      .catch((error) => {
+        return res.status(400).json(error)
+      });
     })
     .catch((error) => {
       return res.status(400).json(error)
@@ -67,7 +67,8 @@ function destroy(req,res) {
       if (!project) {
         return res.status(400).json({ message: 'Project Not Found' });
       }
-      return project.destroy()
+      
+      project.destroy()
         .then((project) => {
           return res.status(200).json(project)
         })

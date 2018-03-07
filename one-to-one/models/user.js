@@ -1,16 +1,12 @@
 'use strict';
-module.exports = function(sequelize, DataTypes) {
+module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
     firstName: {
       type: DataTypes.STRING,
       allowNull: false
     },
     lastName: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    bio: {
-      type: DataTypes.TEXT,
+      type: DataTypes.BOOLEAN,
       allowNull: false
     },
     email: {
@@ -21,16 +17,16 @@ module.exports = function(sequelize, DataTypes) {
       }
     }
   }, {
-  paranoid: true
-});
+    paranoid: true
+  });
 
   User.associate = (models) => {
-    User.hasMany(models.Task, {
+    User.hasOne(models.Passport, {
       foreignKey: {
         name: 'userId',
         allowNull: false
       },
-      as: 'tasks'
+      as: 'passport'
     });
   };
 

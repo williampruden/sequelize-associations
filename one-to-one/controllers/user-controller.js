@@ -1,16 +1,17 @@
-const { User, Task } = require('../models/')
+const { Passport, User } = require('../models/')
 
 function index(req,res) {
   User.findAll({
     include: [{
-      model: Task,
-      as: 'tasks'
+      model: Passport,
+      as: 'passport'
     }],
   })
   .then((user) => {
     return res.status(200).json(user)
   })
   .catch((error) => {
+    console.log("ERROR: ", error);
     return res.status(400).json(error)
   });
 }
@@ -19,7 +20,6 @@ function create(req,res) {
   User.create({
     firstName: req.body.firstName,
     lastName: req.body.lastName,
-    bio: req.body.bio,
     email: req.body.email
   })
   .then((user) => {
@@ -32,11 +32,11 @@ function create(req,res) {
 
 function show(req,res) {
   User.findById(req.params.id, {
-      include: [{
-        model: Task,
-        as: 'tasks'
-      }]
-    })
+    include: [{
+      model: Passport,
+      as: 'passport'
+    }],
+  })
     .then((user) => {
       if (!user) {
         return res.status(404).json({ message: 'User Not Found' });
@@ -45,7 +45,7 @@ function show(req,res) {
       return res.status(200).json(user);
     })
     .catch((error) => {
-      res.status(400).json(error)
+      return res.status(400).json(error)
     });
 }
 
@@ -58,17 +58,17 @@ function update(req,res) {
 
       return user.update({
           ...user, //spread out existing user
-          ...req.body //spread out req.body - the differences in the body will override the user returned from DB.
+          ...req.body //spread out body - the differences in the body will over ride the user returned from DB.
         })
-        .then((user) => {
-          res.status(200).json(user)
+        .then((updatedUser) => {
+          return res.status(200).json(updatedUser)
         })
         .catch((error) => {
-          res.status(400).json(error)
+          return res.status(400).json(error)
         });
     })
     .catch((error) => {
-      res.status(400).json(error)
+      return res.status(400).json(error)
     });
 }
 
@@ -80,14 +80,14 @@ function destroy(req,res) {
       }
       return user.destroy()
         .then((user) => {
-          res.status(200).json(user)
+          return res.status(200).json(user)
         })
         .catch((error) => {
-          res.status(400).json(error)
+          return res.status(400).json(error)
         });
     })
     .catch((error) => {
-      res.status(400).json(error)
+      return res.status(400).json(error)
     });
 }
 

@@ -9,10 +9,12 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       firstName: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false
       },
       lastName: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false
       },
       email: {
         type: Sequelize.STRING,
@@ -20,9 +22,6 @@ module.exports = {
         validate: {
           isEmail : true
         }
-      },
-      bio: {
-        type: Sequelize.TEXT
       },
       createdAt: {
         allowNull: false,

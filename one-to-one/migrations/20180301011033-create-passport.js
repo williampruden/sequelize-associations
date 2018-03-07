@@ -1,18 +1,28 @@
 'use strict';
 module.exports = {
   up: function(queryInterface, Sequelize) {
-    return queryInterface.createTable('Tasks', {
+    return queryInterface.createTable('Passports', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      title: {
-        type: Sequelize.STRING
+      country: {
+        type: Sequelize.STRING,
+        allowNull: false
       },
-      complete: {
-        type: Sequelize.BOOLEAN
+      passportNumber: {
+        type: Sequelize.INTEGER,
+        allowNull: false
+      },
+      issueDate: {
+        type: Sequelize.DATE,
+        allowNull: false
+      },
+      expirationDate: {
+        type: Sequelize.DATE,
+        allowNull: false
       },
       createdAt: {
         allowNull: false,
@@ -28,7 +38,6 @@ module.exports = {
       },
       userId: {
         type: Sequelize.INTEGER,
-        onDelete: 'CASCADE',
         references: {
           model: 'Users',
           key: 'id',
@@ -38,6 +47,6 @@ module.exports = {
     });
   },
   down: function(queryInterface, Sequelize) {
-    return queryInterface.dropTable('Tasks');
+    return queryInterface.dropTable('Passports');
   }
 };

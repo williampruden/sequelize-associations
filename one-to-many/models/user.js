@@ -21,8 +21,8 @@ module.exports = function(sequelize, DataTypes) {
       }
     }
   }, {
-  paranoid: true
-});
+    paranoid: true
+  });
 
   User.associate = (models) => {
     User.hasMany(models.Task, {

@@ -10,8 +10,8 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: false,
     }
   }, {
-  paranoid: true
-});
+    paranoid: true
+  });
 
   Task.associate = (models) => {
     Task.belongsTo(models.User, {

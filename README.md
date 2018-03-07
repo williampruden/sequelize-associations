@@ -33,9 +33,9 @@ For those of you who are interested in using PostgreSQL and are running a Mac, I
 ### Folder Structure
 Each folder has its own echo system designed to show one association each.
   - many-to-many - in Progress
-  - one-to-many - *DONE*
-  - one-to-one - BP out
-  - zero-to-many - *DONE*
+  - one-to-many - **DONE**
+  - one-to-one - **DONE**
+  - zero-to-many - **DONE**
   - zero-to-one - BP out
 
 

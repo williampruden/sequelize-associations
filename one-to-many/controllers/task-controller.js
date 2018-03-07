@@ -45,16 +45,16 @@ function update(req,res) {
         return res.status(404).json({ message: 'Task Not Found' });
       }
 
-      return task.update({
-          ...task, //spread out existing task
-          ...req.body //spread out body - the differences in the body will over ride the task returned from DB.
-        })
-        .then((updatedTask) => {
-          return res.status(200).json(updatedTask)
-        })
-        .catch((error) => {
-          return res.status(400).json(error)
-        });
+      task.update({
+        ...task, //spread out existing task
+        ...req.body //spread out body - the differences in the body will over ride the task returned from DB.
+      })
+      .then((updatedTask) => {
+        return res.status(200).json(updatedTask)
+      })
+      .catch((error) => {
+        return res.status(400).json(error)
+      });
     })
     .catch((error) => {
       return res.status(400).json(error)
@@ -67,7 +67,8 @@ function destroy(req,res) {
       if (!task) {
         return res.status(400).json({ message: 'Task Not Found' });
       }
-      return task.destroy()
+      
+      task.destroy()
         .then((task) => {
           return res.status(200).json(task)
         })
