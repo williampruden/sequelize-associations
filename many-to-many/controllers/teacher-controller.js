@@ -1,7 +1,14 @@
 const { Student, Teacher } = require('../models/')
 
 function index(req,res) {
-  Teacher.findAll()
+  Teacher.findAll({
+    include: [{
+      model: Student,
+      as: 'students',
+      attributes: ['id', 'firstName', 'lastName', 'gradeLevel', 'gpa'],
+      through: { attributes: [] }
+    }]
+  })
   .then((teacher) => {
     return res.status(200).json(teacher)
   })
@@ -12,9 +19,10 @@ function index(req,res) {
 
 function create(req,res) {
   Teacher.create({
-    title: req.body.title,
-    complete: false,
-    teacherId: req.body.teacherId
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    subject: req.body.subject,
+    numberOfClasses: req.body.numberOfClasses,
   })
   .then((teacher) => {
     return res.status(200).json(teacher)
@@ -25,11 +33,20 @@ function create(req,res) {
 }
 
 function show(req,res) {
-  Teacher.findById(req.params.id)
+  Teacher.findById(req.params.id, {
+    include: [{
+      model: Student,
+      as: 'students',
+      attributes: ['id', 'firstName', 'lastName', 'gradeLevel', 'gpa'],
+      through: { attributes: [] }
+    }]
+  })
     .then((teacher) => {
       if (!teacher) {
         return res.status(404).json({ message: 'Teacher Not Found' });
       }
+
+      console.log("TEACHER INSTANCE: ", teacher);
 
       return res.status(200).json(teacher);
     })
@@ -45,16 +62,16 @@ function update(req,res) {
         return res.status(404).json({ message: 'Teacher Not Found' });
       }
 
-      return teacher.update({
-          ...teacher, //spread out existing teacher
-          ...req.body //spread out body - the differences in the body will over ride the teacher returned from DB.
-        })
-        .then((updatedTeacher) => {
-          return res.status(200).json(updatedTeacher)
-        })
-        .catch((error) => {
-          return res.status(400).json(error)
-        });
+      teacher.update({
+        ...teacher, //spread out existing teacher
+        ...req.body //spread out body - the differences in the body will over ride the teacher returned from DB.
+      })
+      .then((updatedTeacher) => {
+        return res.status(200).json(updatedTeacher)
+      })
+      .catch((error) => {
+        return res.status(400).json(error)
+      });
     })
     .catch((error) => {
       return res.status(400).json(error)
@@ -67,9 +84,30 @@ function destroy(req,res) {
       if (!teacher) {
         return res.status(400).json({ message: 'Teacher Not Found' });
       }
-      return teacher.destroy()
-        .then((teacher) => {
-          return res.status(200).json(teacher)
+      teacher.destroy()
+      .then((teacher) => {
+        return res.status(200).json(teacher)
+      })
+      .catch((error) => {
+        return res.status(400).json(error)
+      });
+    })
+    .catch((error) => {
+      return res.status(400).json(error)
+    });
+}
+
+
+function addStudentToTeacher(req, res) {
+  Teacher.findById(req.params.teacherId)
+    .then((teacher) => {
+      if (!teacher) {
+        return res.status(400).json({ message: 'Teacher Not Found' });
+      }
+
+      teacher.addStudent(req.params.studentId)
+        .then((response) => {
+          return res.status(200).json(response)
         })
         .catch((error) => {
           return res.status(400).json(error)
@@ -80,4 +118,4 @@ function destroy(req,res) {
     });
 }
 
-module.exports = { index, create, show, update, destroy }
+module.exports = { index, create, show, update, destroy, addStudentToTeacher }

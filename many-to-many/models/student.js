@@ -18,12 +18,15 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     }
   }, {
-  paranoid: true
-});
+    paranoid: true
+  });
 
   Student.associate = (models) => {
-
-
+    Student.belongsToMany(models.Teacher, {
+      through: "TeacherStudent",
+      foreignKey: 'studentId',
+      as: 'teachers'
+    });
   };
 
   return Student;

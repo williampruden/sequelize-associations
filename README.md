@@ -30,12 +30,16 @@ For those of you who are interested in using PostgreSQL and are running a Mac, I
   - [Postgres App](https://postgresapp.com/) - this app hosts the local server off of which PostgreSQL will run on your local machine.  Super easy to setup, just follow their instructions and you are off to the races.
   - [Postico](https://eggerapps.at/postico/) - this app is a GUI that allows you to create databases, perform CRUD operations inside of databases and view data within databases to ensure that your data is in fact persisting the way you intend it to.
 
-### Folder Structure
+### Tutorials
 Each folder has its own echo system designed to show one association each. Tutorials and explanations provided for each below.
-  - [many-to-many](https://github.com/williampruden/sequelize-associations#many-to-many) - in Progress
-  - [one-to-many](https://github.com/williampruden/sequelize-associations#one-to-many)
-  - [one-to-one](https://github.com/williampruden/sequelize-associations#one-to-one)
-  - [zero-to-many](https://github.com/williampruden/sequelize-associations#zero-to-many)
+  - [Overview](https://github.com/williampruden/sequelize-associations#overview)
+  - [Many-To-Many](https://github.com/williampruden/sequelize-associations#many-to-many)
+  - [One-To-Many](https://github.com/williampruden/sequelize-associations#one-to-many)
+  - [One-To-One](https://github.com/williampruden/sequelize-associations#one-to-one)
+  - [Zero-To-Many](https://github.com/williampruden/sequelize-associations#zero-to-many)
+
+### Overview
+Tutorial content coming soon
 
 ### Many To Many
 Tutorial content coming soon
@@ -48,3 +52,6 @@ Tutorial content coming soon
 
 ### Zero to Many
 Tutorial content coming soon
+
+
+Incredibly helpful tutorial and many thanks to https://github.com/josie11/Sequelize-Association-Example/blob/master/server/index.js

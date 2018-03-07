@@ -19,8 +19,7 @@ module.exports = (sequelize, DataTypes) => {
         name: 'userId',
         allowNull: false
       },
-      as: 'tasks',
-      onDelete: 'CASCADE'
+      as: 'tasks'
     });
   };
 

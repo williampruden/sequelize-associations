@@ -2,10 +2,7 @@ const { Student, Teacher } = require('../models/')
 
 function index(req,res) {
   Student.findAll({
-    include: [{
-      model: Teacher,
-      as: 'tasks'
-    }],
+    include: [Teacher],
   })
   .then((student) => {
     return res.status(200).json(student)
@@ -19,8 +16,8 @@ function create(req,res) {
   Student.create({
     firstName: req.body.firstName,
     lastName: req.body.lastName,
-    bio: req.body.bio,
-    email: req.body.email
+    gradeLevel: req.body.gradeLevel,
+    gpa: req.body.gpa
   })
   .then((student) => {
     return res.status(200).json(student)
@@ -34,7 +31,7 @@ function show(req,res) {
   Student.findById(req.params.id, {
       include: [{
         model: Teacher,
-        as: 'tasks'
+        as: 'teachers'
       }]
     })
     .then((student) => {
@@ -56,16 +53,16 @@ function update(req,res) {
         return res.status(404).json({ message: 'Student Not Found' });
       }
 
-      return student.update({
-          ...student, //spread out existing student
-          ...req.body //spread out req.body - the differences in the body will override the student returned from DB.
-        })
-        .then((student) => {
-          res.status(200).json(student)
-        })
-        .catch((error) => {
-          res.status(400).json(error)
-        });
+      student.update({
+        ...student, //spread out existing student
+        ...req.body //spread out req.body - the differences in the body will override the student returned from DB.
+      })
+      .then((student) => {
+        res.status(200).json(student)
+      })
+      .catch((error) => {
+        res.status(400).json(error)
+      });
     })
     .catch((error) => {
       res.status(400).json(error)
@@ -78,17 +75,38 @@ function destroy(req,res) {
       if (!student) {
         return res.status(400).json({ message: 'Student Not Found' });
       }
-      return student.destroy()
-        .then((student) => {
-          res.status(200).json(student)
-        })
-        .catch((error) => {
-          res.status(400).json(error)
-        });
+      student.destroy()
+      .then((student) => {
+        res.status(200).json(student)
+      })
+      .catch((error) => {
+        res.status(400).json(error)
+      });
     })
     .catch((error) => {
       res.status(400).json(error)
     });
 }
 
-module.exports = { index, create, show, update, destroy }
+function addTeacherToStudent(req, res) {
+  Student.findById(req.params.studentId)
+    .then((student) => {
+      if (!student) {
+        return res.status(400).json({ message: 'Student Not Found' });
+      }
+
+      student.addTeacher(req.params.teacherId)
+        .then((response) => {
+          return res.status(200).json(response)
+        })
+        .catch((error) => {
+          return res.status(400).json(error)
+        });
+    })
+    .catch((error) => {
+      return res.status(400).json(error)
+    });
+}
+
+
+module.exports = { index, create, show, update, destroy, addTeacherToStudent }

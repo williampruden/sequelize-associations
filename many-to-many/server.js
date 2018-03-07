@@ -30,7 +30,3 @@ models.sequelize
   });
 
 module.exports = app;
-
-// UPDATE CONTROLLERS
-// UPDATE SEEDERS
-// CREATE JOIN TABLES THROUGH ASSCIATIONS
