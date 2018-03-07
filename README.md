@@ -1,7 +1,7 @@
 # Sequelize Version 4 Association Examples
 
 ### Sequelize
-Currently Sequelize is the only SQL ORM for those developing in Node. While the technology is helpful the documentation and community generated tutorials can often be confusing. This repo is an attempt at showing concrete examples of how the ORM works with defining associations and querying based on those associations.
+Currently Sequelize is the only SQL ORM for those developing in Node. While the technology is powerful the documentation and community generated tutorials can often be confusing, leaving out key files, steps, or code snippets needed to fully understand. This repo is an attempt at showing concrete examples of how the ORM works with defining associations and querying based on those associations. The examples provided are intentionally simplistic and are purely focused on demonstrating what Sequelize is capable of.
 
 - I've chosen to use a PostgreSQL DB for these examples but Sequelize does offer support for [other DBs](http://docs.sequelizejs.com/manual/installation/getting-started.html) as well:
   - PostgreSQL
@@ -31,13 +31,11 @@ For those of you who are interested in using PostgreSQL and are running a Mac, I
   - [Postico](https://eggerapps.at/postico/) - this app is a GUI that allows you to create databases, perform CRUD operations inside of databases and view data within databases to ensure that your data is in fact persisting the way you intend it to.
 
 ### Folder Structure
-Each folder has its own echo system designed to show one association each.
+Each folder has its own echo system designed to show one association each. Tutorials and explanations provided for each below.
   - [many-to-many](https://github.com/williampruden/sequelize-associations#many-to-many) - in Progress
-  - one-to-many - **DONE**
-  - one-to-one - **DONE**
-  - zero-to-many - **DONE**
-  - zero-to-one - BP out
-
+  - [one-to-many](https://github.com/williampruden/sequelize-associations#one-to-many)
+  - [one-to-one](https://github.com/williampruden/sequelize-associations#one-to-one)
+  - [zero-to-many](https://github.com/williampruden/sequelize-associations#zero-to-many)
 
 ### Many To Many
 Tutorial content coming soon
@@ -49,7 +47,4 @@ Tutorial content coming soon
 Tutorial content coming soon
 
 ### Zero to Many
-Tutorial content coming soon
-
-### Zero to One
 Tutorial content coming soon
