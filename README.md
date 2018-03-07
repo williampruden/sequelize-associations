@@ -32,7 +32,7 @@ For those of you who are interested in using PostgreSQL and are running a Mac, I
 
 ### Folder Structure
 Each folder has its own echo system designed to show one association each.
-  - many-to-many - in Progress
+  - [many-to-many](https://github.com/williampruden/sequelize-associations#many-to-many) - in Progress
   - one-to-many - **DONE**
   - one-to-one - **DONE**
   - zero-to-many - **DONE**
