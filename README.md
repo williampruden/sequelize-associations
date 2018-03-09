@@ -13,20 +13,20 @@ I've chosen to use a PostgreSQL DB for these examples but Sequelize does offer s
 ## Before We Start
 Lets take a look at the tools and technologies we will be using:
 
-- [Node](https://nodejs.org/en/) **v8.9.4** - We're going to use this to run JavaScript code on the server. 
+- [Node](https://nodejs.org/en/) **v8.9.4** - We're going to use this to run JavaScript code on the server.
 
 - [Express](https://expressjs.com/) **v4.13.4** - As their website states, Express is a "Fast, unopinionated, minimalist web framework for Node.js". If you've been in the Node community for any time at all you should be familiar with how wonderful Express is.  If you are new - then welcome!
 
-- [Express-generator](https://www.npmjs.com/package/express-generator) **v4.15.5** - One of the fastest ways to get an express app up off the ground.  Go ahead and install this onto your machine by typing `npm install -g express-generator` into your command line
+- [Express-generator](https://www.npmjs.com/package/express-generator) **v4.15.5** - One of the fastest ways to get an express app up off the ground.  Go ahead and install this onto your machine by typing `npm install -g express-generator` into your CLI
 
 
-- [PostgreSQL](https://www.postgresql.org/docs/9.6/static/index.html) **v9.6.5** - Powerful open-source database that we're going to use for all of our tutorials. Unfortunately, details on how to install and configure PostgreSQL on your particular system are out of the scope of what this tutorial will cover.  That being said if you find yourself using a Mac - I have a few recommondations on complimentary tools that I have found useful. 
+- [PostgreSQL](https://www.postgresql.org/docs/9.6/static/index.html) **v9.6.5** - Powerful open-source database that we're going to use for all of our tutorials. Unfortunately, details on how to install and configure PostgreSQL on your particular system are out of the scope of what this tutorial will cover.  That being said if you find yourself using a Mac - I have a few recommondations on complimentary tools that I have found useful.
 	- [Postgres App](https://postgresapp.com/) - this app hosts the local server off of which PostgreSQL will run on your local machine.  Super easy to setup, just follow their instructions and you are off to the races.
 	- [Postico](https://eggerapps.at/postico/) - this app is a GUI that allows you to create databases, perform CRUD operations inside of databases and view data within databases to ensure that your data is in fact persisting the way you intend it to.
 
 - [Sequelize](http://docs.sequelizejs.com/) **v4.35.0** - The reason we are all here.  If you haven't heard of it by now then you're in the wrong tutorial.
 
-- [Sequelize-CLI](https://github.com/sequelize/cli) **v4.0.0** - A wonderful command line tool to interface with sequelize. Go ahead and install this onto your machine by typing `npm install -g sequelize-cli` into your command line
+- [Sequelize-CLI](https://github.com/sequelize/cli) **v4.0.0** - A wonderful CLI tool to interface with sequelize. Go ahead and install this onto your machine by typing `npm install -g sequelize-cli` into your CLI
 
 - [Postman](https://www.getpostman.com/docs/v6/postman/launching_postman/navigating_postman) - A Chrome app that we'll use to test our API.
 
@@ -35,8 +35,8 @@ This tutorial assumes an understanding of:
 - JavaScript
 - ES2015 syntax
 - Node/Express basics
-- NPM basics 
-- Command Line 
+- NPM basics
+- CLI
 
 ## Tutorials
 Each folder has its own echo system designed to show one association each. Tutorials and explanations provided for each folder below.
@@ -51,16 +51,16 @@ Each folder has its own echo system designed to show one association each. Tutor
 If you are familiar with Sequelize and wish to download the repo and play with the existing code then you will need to do the following in order to get the projects up and running.
 
 - create a database on your machine that matches the development url in `./config/config.json`
-- run `npm install` in your cli
-- run `sequelize db:migrate` in your cli
-- run `npm start` in your cli
+- run `npm install` in your CLI
+- run `sequelize db:migrate` in your CLI
+- run `npm start` in your CLI
 - Peek at some of the association specific tutorials as they will help provide clarity on how each one works.
 
 If the instructions above are confusing, fear not, we are going to start from scratch to give you an idea of how to build these apps from the ground up.  
 
-Express-generator, which we installed earlier, allows us to create lightweight express apps. It enables us to say something like `express <app-name>` in our command line.  This will create a brand new folder named after your `<app-name>`.
+Express-generator, which we installed earlier, allows us to create lightweight express apps. It enables us to say something like `express <app-name>` in our CLI.  This will create a brand new folder named after your `<app-name>`.
 
-I always make sure I am on my Desktop in my command line when doing this.  Lets run `express one-to-many` together.
+I always make sure I am on my Desktop in my CLI when doing this.  Lets run `express one-to-many` together.
 
 **GIPHY HERE**
 
@@ -132,7 +132,7 @@ var server = http.createServer(app);
  });
  server.on('error', onError);
  server.on('listening', onListening);
- 
+
  ...
 
 ```
@@ -166,17 +166,39 @@ module.exports = app;
 
 Express-generator's boiler plate is set up to support server side rendering which we won't need for this project so I remove quite a bit from server.js.
 
-In your `./package.json` file remove the line `"jade": "~1.11.0",`.  Jade is a templating engine to support views.  Again we won't have views so its not needed.
+Update your `./package.json` to look like:
 
-Now that we have stripped away quite a bit of code its time to start building.  Run `npm install` to install the packages found in our `./package.json`.  
+```javascript
+{
+  "name": "sequelize--one-to-many",
+  "version": "1.0.0",
+  "engines": {
+    "node": "8.9.4"
+  },
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "body-parser": "~1.15.1",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.2.0",
+    "express": "~4.13.4",
+    "morgan": "~1.7.0",
+    "pg": "6.4.1",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^4.35.0",
+    "serve-favicon": "~2.3.0"
+  }
+}
+```
 
-Lets install sequelize and our PostgreSQL client by running `npm install --save sequelize pg pg-hstore`
-
-`pg` will be responsible for creating the database connection while `pg-hstore` is for serializing and deserializing JSON data into the Postgres hstore format.
+We've removed the line `"jade": "~1.11.0",` and added lines for `pg`, `pg-hstore`, and `sequelize`  Jade is a templating engine to support views.  Again we won't have views so its not needed. `pg` will be responsible for creating the database connection while `pg-hstore` is for serializing and deserializing JSON data into the Postgres hstore format.
 
 If you plan on using a different database please refer to the [sequelize docs](http://docs.sequelizejs.com/manual/installation/getting-started.html) as to what to install.
 
-With our `sequelize-cli` installed globally and `sequelize` installed locally to our project we can now run our first sequelize command to get things started.  In your command line run `sequelize init` and notice what happens. It has added the folders `config`, `models`, `migrations`, and `seeders` along with a few other files which we will explore in a bit.  Quick sanity check.  Our file structure should now look like:
+Now that we have stripped away quite a bit of code its time to start building.  Run `npm install` to install the packages found in our `./package.json`.  
+
+With our `sequelize-cli` installed globally and `sequelize` installed locally to our project we can now run our first sequelize command to get things started.  In your CLI run `sequelize init` and notice what happens. It has added the folders `config`, `models`, `migrations`, and `seeders` along with a few other files which we will explore in a bit.  Quick sanity check.  Our file structure should now look like:
 
 ```bash
 .
@@ -207,7 +229,7 @@ module.exports = {
   'models-path': path.resolve('./', 'models')
 };
 ```
-The `config.json` file contains our application configuration settings, in short this file holds the info needed to connect to our actual DB. `migrations` will hold our application's migrations - much more on what migrations are a little later. `models` is where we will create and define our app's models. `seeds` is something we will touch on briefly but in short seed data is the initial data we provide our app for testing purposes. 
+The `config.json` file contains our application configuration settings, in short this file holds the info needed to connect to our actual DB. `migrations` will hold our application's migrations - much more on what migrations are a little later. `models` is where we will create and define our app's models. `seeds` is something we will touch on briefly but in short seed data is the initial data we provide our app for testing purposes.
 
 We will see the true power of this file later but for now lets explore those files that `sequelize init` did generate for us.
 
@@ -254,9 +276,9 @@ module.exports = db;
 ```
 There is a lot going on in this file but in short:
 
-- We are requiring the modules we're going to be using. 
-- Reading the configuration specific to our current Node environment and if we don't have a Node environment defined, we're defaulting to development. 
-- Establishing a connection with our database. 
+- We are requiring the modules we're going to be using.
+- Reading the configuration specific to our current Node environment and if we don't have a Node environment defined, we're defaulting to development.
+- Establishing a connection with our database.
 - Read our models folder, importing all the models in it, adding them to the db object and applying relationships between the models, if those relationships exist.
 
 
@@ -346,7 +368,7 @@ models.sequelize
   .catch(function(error) {
     console.log("Error creating connection:", error);
   });
-  
+
  module.exports = app;
 
 ```
