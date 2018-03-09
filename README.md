@@ -192,9 +192,9 @@ Update your `./package.json` to look like:
 }
 ```
 
-We've removed the line `"jade": "~1.11.0",` and added lines for `pg`, `pg-hstore`, and `sequelize`  Jade is a templating engine to support views.  Again we won't have views so its not needed. `pg` will be responsible for creating the database connection while `pg-hstore` is for serializing and deserializing JSON data into the Postgres hstore format.
+We've removed the line `"jade": "~1.11.0",` and added lines for `pg`, `pg-hstore`, and `sequelize`. Jade is a templating engine to support views.  Again we won't have views so its not needed. `pg` will be responsible for creating the database connection while `pg-hstore` is for serializing and deserializing JSON data into the Postgres hstore format.
 
-If you plan on using a different database please refer to the [sequelize docs](http://docs.sequelizejs.com/manual/installation/getting-started.html) as to what to install.
+If you plan on using a different database please refer to the [sequelize docs](http://docs.sequelizejs.com/manual/installation/getting-started.html) for what to install.
 
 Now that we have stripped away quite a bit of code its time to start building.  Run `npm install` to install the packages found in our `./package.json`.  
 
@@ -274,7 +274,7 @@ db.Sequelize = Sequelize;
 module.exports = db;
 
 ```
-There is a lot going on in this file but in short:
+Summary of what is happening here:
 
 - We are requiring the modules we're going to be using.
 - Reading the configuration specific to our current Node environment and if we don't have a Node environment defined, we're defaulting to development.
@@ -332,7 +332,7 @@ I refactor mine to look more like this:
   }
 }
 ```
-The url property contains all the details needed to connect to the DB.  The only other change that then needs to take place is in my `./models/index.js` file I have to update a few lines to read that url property.
+Notice we changed the `dialect` to match our db.  Again if you chose a different db, then please specify the `dialect` that suits your project here. The `url` property contains all the details needed to connect to the db.  The only other change that then needs to take place now is in our `./models/index.js` file.  We need to read that `url` property instead of the `database`, `username`, and `password`.
 
 ```javascript
 ...
@@ -346,7 +346,7 @@ if (config.use_env_variable) {
 ...
 ```
 
-Now all we need to do is create a DB and establish our connection. If PostgreSQL is installed you should be able to run the command `createdb sql-otm-dev` and this will create our db `sql-otm-dev`.  If you got [Postico](https://eggerapps.at/postico/) working then you can also create a DB this way.
+Now all we need to do is create a DB and establish our connection. If PostgreSQL is installed you should be able to run the command `createdb sql-otm-dev` and this will create our db `sql-otm-dev`.  If you have [Postico](https://eggerapps.at/postico/) working then you can also create a DB this way.
 
 **GIPHY HERE**
 
@@ -377,7 +377,7 @@ Now if we run `npm start` it should look something like this.
 
 **GIPHY HERE**
 
-Success! We have a PostgreSQL DB hooked up to our Node/Express application. In the comming tutorials we will explore how to create models, migrations, seeders, how to establish associations, and then query based on those associations. Sounds fun doesn't it?
+Success! We have a PostgreSQL DB hooked up to our Node/Express application. In the coming tutorials we will explore how to create models, migrations, seeders, how to establish associations, and then query based on those associations. Sounds fun doesn't it?
 
 ## One to Many
 Tutorial content coming soon
