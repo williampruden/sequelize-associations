@@ -1,5 +1,5 @@
 {
-  "name": "sequelize--one-to-many",
+  "name": "sequelize--one-to-one",
   "version": "1.0.0",
   "author": "William Pruden",
   "engines": {
