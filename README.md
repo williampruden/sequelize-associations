@@ -40,10 +40,10 @@ Each folder has its own echo system designed to show one association each. Tutor
 > NOTE: Each tutorial builds off the one before it so its recommended you do them in order to get the most.
 
   - [Overview](https://github.com/williampruden/sequelize-associations#overview)
-  - [One-To-Many](https://github.com/williampruden/sequelize-associations#one-to-many)
-  - [Zero-To-Many](https://github.com/williampruden/sequelize-associations#zero-to-many)
-  - [One-To-One](https://github.com/williampruden/sequelize-associations#one-to-one)
-  - [Many-To-Many](https://github.com/williampruden/sequelize-associations#many-to-many)
+  - [One-To-Many](https://github.com/williampruden/sequelize-associations/tree/master/01_one-to-many)
+  - [Zero-To-Many](https://github.com/williampruden/sequelize-associations/tree/master/02_zero-to-many)
+  - [One-To-One](https://github.com/williampruden/sequelize-associations/tree/master/03_one-to-one)
+  - [Many-To-Many](https://github.com/williampruden/sequelize-associations/tree/master/04_many-to-many)
 
 ## Overview
 If you are familiar with Sequelize and wish to download the repo and play with the existing code then you will need to do the following in order to get the projects up and running.
@@ -245,4 +245,4 @@ Now if we run `npm start` it should look something like this.
 
 **GIPHY HERE**
 
-Success! We have a PostgreSQL DB hooked up to our Node/Express application. In the coming tutorials we will explore how to create models, migrations, seeders, how to establish associations, and then query based on those associations. Sounds fun doesn't it? Let's go to learn more in the [One-To-Many Tutorial]()
+Success! We have a PostgreSQL DB hooked up to our Node/Express application. In the coming tutorials we will explore how to create models, migrations, seeders, how to establish associations, and then query based on those associations. Sounds fun doesn't it? Let's go to learn more in the [One-To-Many Tutorial](https://github.com/williampruden/sequelize-associations/tree/master/01_one-to-many)
