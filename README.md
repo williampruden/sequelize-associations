@@ -1,7 +1,7 @@
 # Sequelize Version 4 Association Examples
 
 ## Sequelize
-Currently Sequelize is the only SQL ORM for those developing in Node. While the technology is powerful the documentation and community generated tutorials can often be confusing, leaving out key files, steps, or code snippets needed to fully understand. This repo is an attempt at showing concrete examples of how the ORM works with defining associations and querying based on those associations. The examples provided are intentionally simplistic and are purely focused on demonstrating what Sequelize is capable of.
+Sequelize is a SQL ORM for those developing in Node. This repo is a set of tutorials showing concrete examples of how the ORM works with defining associations and querying based on those associations. The examples provided are intentionally simplistic and focused on demonstrating what Sequelize is capable of.
 
 I've chosen to use a PostgreSQL DB for these examples but Sequelize does offer support for [other DBs](http://docs.sequelizejs.com/manual/installation/getting-started.html) as well:
 
@@ -16,9 +16,6 @@ Lets take a look at the tools and technologies we will be using:
 - [Node](https://nodejs.org/en/) **v8.9.4** - We're going to use this to run JavaScript code on the server.
 
 - [Express](https://expressjs.com/) **v4.13.4** - As their website states, Express is a "Fast, unopinionated, minimalist web framework for Node.js". If you've been in the Node community for any time at all you should be familiar with how wonderful Express is.  If you are new - then welcome!
-
-- [Express-generator](https://www.npmjs.com/package/express-generator) **v4.15.5** - One of the fastest ways to get an express app up off the ground.  Go ahead and install this onto your machine by typing `npm install -g express-generator` into your CLI
-
 
 - [PostgreSQL](https://www.postgresql.org/docs/9.6/static/index.html) **v9.6.5** - Powerful open-source database that we're going to use for all of our tutorials. Unfortunately, details on how to install and configure PostgreSQL on your particular system are out of the scope of what this tutorial will cover.  That being said if you find yourself using a Mac - I have a few recommondations on complimentary tools that I have found useful.
 	- [Postgres App](https://postgresapp.com/) - this app hosts the local server off of which PostgreSQL will run on your local machine.  Super easy to setup, just follow their instructions and you are off to the races.
@@ -58,163 +55,38 @@ If you are familiar with Sequelize and wish to download the repo and play with t
 
 If the instructions above are confusing, fear not, we are going to start from scratch to give you an idea of how to build these apps from the ground up.  
 
-Express-generator, which we installed earlier, allows us to create lightweight express apps. It enables us to say something like `express <app-name>` in our CLI.  This will create a brand new folder named after your `<app-name>`.
+Please clone the [Node-Simple-Starter](https://github.com/williampruden/node-simple-starter) repository as this will be our base for each of our apps.
 
-I always make sure I am on my Desktop in my CLI when doing this.  Lets run `express one-to-many` together.
+```bash
+> npm install
+> npm install --save sequelize pg pg-hstore
+```
 
-**GIPHY HERE**
+`pg` will be responsible for creating the database connection while `pg-hstore` is for serializing and deserializing JSON data into the Postgres hstore format and `sequelize` is our ORM... but you already knew that.
 
-This should generate the following repository for you:
+If you plan on using a DB other than PostgreSQL please refer to the [sequelize docs](http://docs.sequelizejs.com/manual/installation/getting-started.html) for what to install.
+
+Now that our Node app is up and running we can focus on why we are all here - Sequelize!
+
+With our `sequelize-cli` installed globally and `sequelize` installed locally to our project we can now run our first sequelize command. In your CLI run `sequelize init` and notice what happens. It has added the folders `config`, `models`, `migrations`, and `seeders` along with a few other files which we will explore in a bit.  Quick sanity check - our file structure should look like this:
 
 ```bash
 .
-├── app.js
-├── bin
-│   └── www
-├── package.json
-├── public
-│   ├── images
-│   ├── javascripts
-│   └── stylesheets
-│       └── style.css
-├── routes
-│   ├── index.js
-│   └── users.js
-└── views
-    ├── error.jade
-    ├── index.jade
-    └── layout.jade
-```
-
-Go ahead and remove `views`, `public`, and `routes/users.js`.  Rename your `app.js` to `server.js` Your repository should now look like this:
-
-```bash
-.
-├── server.js
-├── bin
-│   └── www
-├── package.json
-└── routes
-    └── index.js
-```
-
-Update your `./bin/www` to look like:
-
-```javascript
-#!/usr/bin/env node
-
-/**
- * Module dependencies.
- */
-
-var app = require('../server');
-var debug = require('debug')('sql-test:server');
-var http = require('http');
-
-/**
- * Get port from environment and store in Express.
- */
-
-var port = normalizePort(process.env.PORT || '3000');
-app.set('port', port);
-
-/**
- * Create HTTP server.
- */
-
-var server = http.createServer(app);
-
-/**
- * Listen on provided port, on all network interfaces.
- */
- server.listen(port, () => {
-   console.log("The server is live over on port: " + port);
- });
- server.on('error', onError);
- server.on('listening', onListening);
-
- ...
-
-```
-
-`var app` is now looking for server.js instead of app.js and we added the call back function to our `server.listen()`
-
-Update your `./server.js` to look like:
-
-```javascript
-const express = require('express');
-const path = require('path');
-const favicon = require('serve-favicon');
-const logger = require('morgan');
-const cookieParser = require('cookie-parser');
-const bodyParser = require('body-parser');
-
-const routes = require('./routes/index');
-
-const app = express();
-
-app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
-
-app.use('/', routes);
-
-module.exports = app;
-```
-
-Express-generator's boiler plate is set up to support server side rendering which we won't need for this project so I remove quite a bit from server.js.
-
-Update your `./package.json` to look like:
-
-```javascript
-{
-  "name": "sequelize--one-to-many",
-  "version": "1.0.0",
-  "engines": {
-    "node": "8.9.4"
-  },
-  "scripts": {
-    "start": "node ./bin/www"
-  },
-  "dependencies": {
-    "body-parser": "~1.15.1",
-    "cookie-parser": "~1.4.3",
-    "debug": "~2.2.0",
-    "express": "~4.13.4",
-    "morgan": "~1.7.0",
-    "pg": "6.4.1",
-    "pg-hstore": "^2.3.2",
-    "sequelize": "^4.35.0",
-    "serve-favicon": "~2.3.0"
-  }
-}
-```
-
-We've removed the line `"jade": "~1.11.0",` and added lines for `pg`, `pg-hstore`, and `sequelize`. Jade is a templating engine to support views.  Again we won't have views so its not needed. `pg` will be responsible for creating the database connection while `pg-hstore` is for serializing and deserializing JSON data into the Postgres hstore format.
-
-If you plan on using a different database please refer to the [sequelize docs](http://docs.sequelizejs.com/manual/installation/getting-started.html) for what to install.
-
-Now that we have stripped away quite a bit of code its time to start building.  Run `npm install` to install the packages found in our `./package.json`.  
-
-With our `sequelize-cli` installed globally and `sequelize` installed locally to our project we can now run our first sequelize command to get things started.  In your CLI run `sequelize init` and notice what happens. It has added the folders `config`, `models`, `migrations`, and `seeders` along with a few other files which we will explore in a bit.  Quick sanity check.  Our file structure should now look like:
-
-```bash
-.
-├── server.js
 ├── bin
 │   └── www
 ├── config
 │   └── config.json
+├── controllers
+│   └── user-controller.js
 ├── migrations
 ├── models
 │   └── index.js
 ├── package-lock.json
 ├── package.json
 ├── routes
-│   └── index.js
-└── seeders
+│   └── users.js
+├── seeders
+└── server.js
 ```
 
 It's worth mentioning that `sequelize init` will not generate a [.sequelizerc](http://docs.sequelizejs.com/manual/tutorial/migrations.html#the-sequelizerc-file) file in the root of our application. The `sequelize-cli` needs this file in order to know where certain files and folders are located within our project. Go ahead and create a `.sequelizerc` file in the root of the application and add the following code:
@@ -229,6 +101,7 @@ module.exports = {
   'models-path': path.resolve('./', 'models')
 };
 ```
+
 The `config.json` file contains our application configuration settings, in short this file holds the info needed to connect to our actual DB. `migrations` will hold our application's migrations - much more on what migrations are a little later. `models` is where we will create and define our app's models. `seeds` is something we will touch on briefly but in short seed data is the initial data we provide our app for testing purposes.
 
 We will see the true power of this file later but for now lets explore those files that `sequelize init` did generate for us.
@@ -272,15 +145,14 @@ db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
 module.exports = db;
-
 ```
+
 Summary of what is happening here:
 
 - We are requiring the modules we're going to be using.
 - Reading the configuration specific to our current Node environment and if we don't have a Node environment defined, we're defaulting to development.
 - Establishing a connection with our database.
 - Read our models folder, importing all the models in it, adding them to the db object and applying relationships between the models, if those relationships exist.
-
 
 `./config/config.json` should look like this:
 
@@ -332,7 +204,7 @@ I refactor mine to look more like this:
   }
 }
 ```
-Notice we changed the `dialect` to match our db.  Again if you chose a different db, then please specify the `dialect` that suits your project here. The `url` property contains all the details needed to connect to the db.  The only other change that then needs to take place now is in our `./models/index.js` file.  We need to read that `url` property instead of the `database`, `username`, and `password`.
+Notice we changed the `dialect` to match our DB.  Again if you chose a different DB, then please specify the `dialect` that suits your project here. The `url` property contains all the details needed to connect to the DB. The only other change that then needs to take place now is in our `./models/index.js` file.  We need to read that `url` property instead of the `database`, `username`, and `password`.
 
 ```javascript
 ...
@@ -370,7 +242,6 @@ models.sequelize
   });
 
  module.exports = app;
-
 ```
 
 Now if we run `npm start` it should look something like this.
