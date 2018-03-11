@@ -247,15 +247,29 @@ Now if we run `npm start` it should look something like this.
 Success! We have a PostgreSQL DB hooked up to our Node/Express application. In the coming tutorials we will explore how to create models, migrations, seeders, how to establish associations, and then query based on those associations. Sounds fun doesn't it?
 
 ## One to Many
-Tutorial content coming soon
+In this tutorial we will be:
+- Creating models
+- Creating migrations
+- Establishing associations
+- Querying based on associations
+- Exploring when we would use a one to many relationship
 
 ## Zero to Many
-Tutorial content coming soon
+In this tutorial we will be:
+- Reviewing concepts from our previous tutorial
+- Creating seed files
+- Exploring when we would use a zero(or one) to many relationship
 
 ## One to One
-Tutorial content coming soon
+In this tutorial we will be:
+- Reviewing concepts from our previous tutorials
+- Exploring when we would use a one to one relationship
 
 ## Many To Many
-Tutorial content coming soon
+In this tutorial we will be:
+- Reviewing concepts from our previous tutorials
+- How to establish mapping tables with unique values
+- How to query through the mapping tables and either include or exclude those unique values.
+- Exploring when we would use a many to many relationship
 
 Incredibly helpful tutorial and many thanks to https://github.com/josie11/Sequelize-Association-Example/blob/master/server/index.js
