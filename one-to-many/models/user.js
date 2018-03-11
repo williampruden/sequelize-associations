@@ -9,16 +9,13 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING,
       allowNull: false
     },
-    bio: {
-      type: DataTypes.TEXT,
-      allowNull: false
-    },
     email: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
         isEmail: true
-      }
+      },
+      unique: true
     }
   }, {
     paranoid: true

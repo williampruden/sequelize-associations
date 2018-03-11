@@ -19,10 +19,8 @@ module.exports = {
         allowNull: false,
         validate: {
           isEmail : true
-        }
-      },
-      bio: {
-        type: Sequelize.TEXT
+        },
+        unique: true
       },
       createdAt: {
         allowNull: false,
