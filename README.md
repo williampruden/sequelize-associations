@@ -62,13 +62,9 @@ Please clone the [Node-Simple-Starter](https://github.com/williampruden/node-sim
 > npm install --save sequelize pg pg-hstore
 ```
 
-`pg` will be responsible for creating the database connection while `pg-hstore` is for serializing and deserializing JSON data into the Postgres hstore format and `sequelize` is our ORM... but you already knew that.
+`pg` will be responsible for creating the database connection while `pg-hstore` is for serializing and deserializing JSON data into the Postgres hstore format and `sequelize` is our ORM... but you already knew that. If you plan on using a DB other than PostgreSQL please refer to the [sequelize docs](http://docs.sequelizejs.com/manual/installation/getting-started.html) for what to install.
 
-If you plan on using a DB other than PostgreSQL please refer to the [sequelize docs](http://docs.sequelizejs.com/manual/installation/getting-started.html) for what to install.
-
-Now that our Node app is up and running we can focus on why we are all here - Sequelize!
-
-With our `sequelize-cli` installed globally and `sequelize` installed locally to our project we can now run our first sequelize command. In your CLI run `sequelize init` and notice what happens. It has added the folders `config`, `models`, `migrations`, and `seeders` along with a few other files which we will explore in a bit.  Quick sanity check - our file structure should look like this:
+Now that our Node app is up and running we can focus on why we are all here - Sequelize! With our `sequelize-cli` installed globally and `sequelize` installed locally to our project we can now run our first sequelize command. In your CLI run `sequelize init` and notice what happens. It has added the folders `config`, `models`, `migrations`, and `seeders` along with a few other files which we will explore in a bit.  Quick sanity check - our file structure should look like this:
 
 ```bash
 .
@@ -104,7 +100,7 @@ module.exports = {
 
 The `config.json` file contains our application configuration settings, in short this file holds the info needed to connect to our actual DB. `migrations` will hold our application's migrations - much more on what migrations are a little later. `models` is where we will create and define our app's models. `seeds` is something we will touch on briefly but in short seed data is the initial data we provide our app for testing purposes.
 
-We will see the true power of this file later but for now lets explore those files that `sequelize init` did generate for us.
+We will see the benefits of `.sequelizerc` a little later but for now lets explore the files that `sequelize init` generated for us.
 
 `./models/index.js` should look like this:
 
