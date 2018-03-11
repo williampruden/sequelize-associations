@@ -281,7 +281,7 @@ module.exports = (sequelize, DataTypes) => {
 };
 ```
 
-We are going to talk about what to change and why but for now lets go ahead and update our file to look more like this:
+We are going to talk about what we changed and why but for now lets go ahead and update our file to look more like this:
 
 ```javascript
 'use strict';
@@ -343,7 +343,7 @@ This brings me to a few rules to keep in mind about migrations:
 - Never delete a migration after its been run. We might someday need the `down` function.
 - Never edit a migration after its been run.  If you need to edit your database, create another migration to make the desired change.
 
-Now lets take a look at the migration that was created for us `./migrations/<timestamp>-create-user.js` should look like:
+Now lets take a look at the migration that was created for us `./migrations/<timestamp>-create-user.js`
 
 ```javascript
 'use strict';
@@ -380,7 +380,7 @@ module.exports = {
   }
 };
 ```
-We are going to talk about what to change and why but for now lets go ahead and update our file to look more like this:
+We are going to talk about what we changed and why but for now lets go ahead and update our file to look more like this:
 
 ```javascript
 'use strict';
@@ -426,15 +426,16 @@ module.exports = {
   }
 };
 ```
-We added in all of the same validations and constraints that were made to our model file.  The other glaring difference is that we added the `deletedAt` property and made `allowNull: true` instead of false.  This allows the property to sit there with a NULL value until the record is deleted at which point a time stamp is given. If you remember in our model file we added an attribute to the model itself called `paranoid`.  `paranoid` and `deletedAt` work together to create that soft delete functionality.
+We added in all of the same validations and constraints that were made to our model file.  The other obvious difference is that we added the `deletedAt` property and made `allowNull: true` instead of false.  This allows the property to sit there with a NULL value until the record is deleted at which point a time stamp is given. If you remember in our model file we added an attribute to the model itself called `paranoid`.  `paranoid` and `deletedAt` work together to create that soft delete functionality.
 
-Now that our model and migration are complete we can run the migration by running `sequelize db:migrate` in our CLI.  
+Now that our model and migration are complete we can run the migration by running `sequelize db:migrate`.
 
-If you make a mistake you have two options:
+If you make a mistake you have a few options:
  
 - Create a new migration by running `sequelize migration:generate` and in the new migration correct your error then run `sequelize db:migrate` 
-- Rollback your last migration with `sequelize db:migrate:undo` or rollback all of your migrations `sequelize db:migrate:undo:all`. Use `sequelize db:migrate:undo:all` with caution as it cleans house.
-- For more on migration commands check out [the docs](https://github.com/sequelize/cli#documentation)
+- Rollback your last migration with `sequelize db:migrate:undo`, edit the migration and then re-run `sequelize db:migrate`
+- Rollback all of your migrations with `sequelize db:migrate:undo:all` and start from scratch. Use `sequelize db:migrate:undo:all` with caution as it cleans house.
+- For more on migration commands check out [the docs](https://github.com/sequelize/cli#documentation).
 
 ### Establishing Associations
 Now that our User is complete lets create our Task and establish the associations between the two.
@@ -518,7 +519,7 @@ module.exports = {
 };
 
 ```
-Notice in the migrations file we added a new property to our task called `userId`.  This will be the foreign key that sequelize uses when we perform queries.
+Notice in the migrations file we added a new property to our Task called `userId`.  This will be the foreign key that sequelize uses when we perform queries.
 
 The last steps in creating the associations happens in each model file. Update your code to each to match the following:
 
