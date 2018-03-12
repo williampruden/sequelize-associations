@@ -524,9 +524,9 @@ module.exports = {
     return queryInterface.bulkInsert('Users', [{
       firstName : 'Erlich',
       lastName : 'Bachman',
-      email : 'bachmanity.insanity@yahoo.com'
+      email : 'bachmanity.insanity@yahoo.com',
       createdAt : new Date(),
-      updatedAt : new Date(),
+      updatedAt : new Date()
     }], {});
   },
 
@@ -544,5 +544,4 @@ If you need to undo the seed file you have these two commands available to you.
 - `sequelize db:seed:undo`
 - `sequelize db:seed:undo:all`
 
-
-Thats it for Zero-To-Many!  See you over at [One-To-One](https://github.com/williampruden/sequelize-associations/tree/master/03_one-to-one) for more on all things Sequelize!
+Thats it for Zero-To-Many! See you over at [One-To-One](https://github.com/williampruden/sequelize-associations/tree/master/03_one-to-one) for more on all things Sequelize!
