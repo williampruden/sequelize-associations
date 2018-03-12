@@ -217,7 +217,7 @@ if (config.use_env_variable) {
 
 Now all we need to do is create a DB and establish our connection. If PostgreSQL is installed you should be able to run the command `createdb sql-otm-dev` and this will create our db `sql-otm-dev`.  If you have [Postico](https://eggerapps.at/postico/) working then you can also create a DB this way.
 
-**GIPHY HERE**
+<img src="https://i.imgur.com/1dl9btC.gif" align="center" />
 
 The last step is to establish a connection with the database by adding the following code to the bottom of our `server.js` file.
 

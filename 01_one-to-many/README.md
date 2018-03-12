@@ -1,5 +1,3 @@
-[Imgur](https://i.imgur.com/1dl9btC.gif)
-
 # One to Many
 In this tutorial we will be:
 - [Creating models](https://github.com/williampruden/sequelize-associations/tree/master/01_one-to-many#creating-models)
@@ -84,11 +82,11 @@ Just like you use Git to manage changes in your source code, you can use migrati
 
 In a moment we will run our migrations by running `sequelize db:migrate` in our CLI. Running this migration will change the state of our database.  Right now if I explore the database for this app in Postico (my GUI) it will look empty.
 
-**PIC OF POSTICO**
+<img src="https://i.imgur.com/n6hOk8K.png" align="center" />
 
 But after I run the migrations you will see that the tables with the desired columns, constraints, and validations will appear.
 
-**PIC OF POSTICO**
+<img src="https://i.imgur.com/VqiLa7n.png" align="center" />
 
 Sure I could go into my GUI and configure all of this manually but if I am working on a team then there is a strong chance that my instance of the database will look different than my teammates. But if my teammate and I both run the same migrations then we can rest assured that our databases will be identical.
 
@@ -408,7 +406,7 @@ function create(req,res) {
 ```
 Its important to require our models at the top of our controller file so we can access all the methods that Sequelize gives us access to.  In this example we are taking the request body that is passed in and creating a new instance of a User. My postman looks something like this:
 
-**GIPHY CREATE USER**
+<img src="https://i.imgur.com/vkjtDfZ.gif" align="center" />
 
 ### Listing All Users
 
@@ -430,7 +428,7 @@ function index(req,res) {
   });
 }
 ```
-**POSTMAN PIC**
+<img src="https://i.imgur.com/OlekDI0.png" align="center" />
 
 Since we have only made one user so far it should be returning an array with our one user inside of it.  You should also notice that this user has an empty array of tasks inside of him. When we say `User.findAll()` we pass in a configurable object where we can specify what we wish to include.  Since Users and Tasks have an established relationship we can call for Tasks to show up `as` tasks.  
 
@@ -476,7 +474,7 @@ function create(req,res) {
 ```
 If you attempt to create a task without a userId it should throw an error.  If you remember in our migration and Task model we stated `allowNull: false`.  This means that a task can not float around in our database without belonging to a user.  As we create this task lets set the userId to the user we just created.
 
-**POSTMAN GIPHY**
+<img src="https://i.imgur.com/2ES6OR1.gif" align="center" />
 
 ### Listing All Tasks
 
@@ -495,7 +493,7 @@ function index(req,res) {
 ```
 This should list all tasks in our database.  Feel free to make a few different Users and assign different Tasks to those Users.
 
-**POSTMAN PIC**
+<img src="https://i.imgur.com/xbwAqcW.png" align="center" />
 
 ### Showing Users and Tasks
 
@@ -523,7 +521,7 @@ function show(req,res) {
 ```
 Now that we have a few users in our database we might run into moments where we just want to see one at a time.  We can use the `.findById()` method to query a single user and again passing in the configurable object we can include the Tasks associated with this user in the response.
 
-**POSTMAN PIC**
+<img src="https://i.imgur.com/Lq82SuV.png" align="center" />
 
 `./controllers/task-controller.js`
 
@@ -571,7 +569,7 @@ function update(req,res) {
     });
 }
 ```
-**POSTMAN PIC**
+<img src="https://i.imgur.com/WXf8L6V.png" align="center" />
 
 `./controllers/task-controller.js`
 
@@ -601,7 +599,7 @@ function update(req,res) {
 
 ```
 
-**POSTMAN PIC**
+<img src="https://i.imgur.com/XtpZHEp.png" align="center" />
 
 ### Deleting Users and Tasks
 
@@ -628,7 +626,7 @@ function destroy(req,res) {
     });
 }
 ```
-**POSTMAN GIPHY**
+<img src="https://i.imgur.com/3TtvUNc.gif" align="center" />
 
 Notice here that if we check our database the record still exists.  What has changed though is that `deletedAt` has been given a timestamp and if you try to query that specific user it will tell you they no longer exist.
 
