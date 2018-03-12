@@ -4,7 +4,6 @@ In this tutorial we will be:
 - [Creating migrations](https://github.com/williampruden/sequelize-associations/tree/master/01_one-to-many#creating-migrations)
 - [Establishing associations](https://github.com/williampruden/sequelize-associations/tree/master/01_one-to-many#establishing-associations)
 - [Querying based on associations](https://github.com/williampruden/sequelize-associations/tree/master/01_one-to-many#querying-based-on-associations)
-- [Exploring when we would use a one to many relationship](https://github.com/williampruden/sequelize-associations/tree/master/01_one-to-many#when-to-use-one-to-many)
 
 ## Creating Models
 With our app setup, we are now ready to generate models. We are going to have two models, Users and Tasks. The relationship between a User and it's Tasks is going to be one-to-many. Another way of saying this is our User can have many Tasks but a Task can only belong to one User.
@@ -651,5 +650,3 @@ function destroy(req,res) {
     });
 }
 ```
-
-## When to use One to Many
