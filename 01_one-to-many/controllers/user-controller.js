@@ -5,7 +5,7 @@ function index(req,res) {
     include: [{
       model: Task,
       as: 'tasks'
-    }],
+    }]
   })
   .then((user) => {
     return res.status(200).json(user)

@@ -219,11 +219,10 @@ Now all we need to do is create a DB and establish our connection. If PostgreSQL
 
 **GIPHY HERE**
 
-Last step is to establish that connection with the database and to do that we need to add the following code to the bottom of our `server.js` file.
+The last step is to establish a connection with the database by adding the following code to the bottom of our `server.js` file.
 
 ```javascript
 ...
-const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const models = require('./server/models/');
 
@@ -245,4 +244,4 @@ Now if we run `npm start` it should look something like this.
 
 **GIPHY HERE**
 
-Success! We have a PostgreSQL DB hooked up to our Node/Express application. In the coming tutorials we will explore how to create models, migrations, seeders, how to establish associations, and then query based on those associations. Sounds fun doesn't it? Let's go to learn more in the [One-To-Many Tutorial](https://github.com/williampruden/sequelize-associations/tree/master/01_one-to-many)
+Success! We have a PostgreSQL DB hooked up to our Node/Express application. In the coming tutorials we will explore how to create models, migrations, seeders, how to establish associations, and then query based on those associations. Sounds fun doesn't it? Let's head on over to [One-To-Many Tutorial](https://github.com/williampruden/sequelize-associations/tree/master/01_one-to-many) to learn more!
