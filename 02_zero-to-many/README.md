@@ -1,19 +1,18 @@
 # Zero to Many
 In this tutorial we will be:
-- [Understand differences between Zero to Many and One To Many]()
-- [Create Our App]()
-- [Creating Seed Files]()
+- [Understand differences between Zero to Many and One To Many](https://github.com/williampruden/sequelize-associations/tree/master/02_zero-to-many#differences)
+- [Create Our App](https://github.com/williampruden/sequelize-associations/tree/master/02_zero-to-many#creating-our-app)
+- [Creating Seed Files](https://github.com/williampruden/sequelize-associations/tree/master/02_zero-to-many#creating-seed-files)
 
 ## Differences
-Before we dive into the code lets first look at the differences between the 2 relationships on a theoretical level first.  In our last tutorial we explored the relationship between Users and Tasks and what we ran into on several occasions was that Tasks couldn't exist outside of the context of belonging to a User. The foreign key for userId was a mandatory part of what it meant to be a Task.  There were no Tasks floating around without an owner. But what if we wanted that.  
+Before we dive into the code lets first consider the differences between the One-To-Many and Zero-To-Many relationships on a theoretical level. In our last tutorial we explored the relationship between Users and Tasks and what we ran into on several occasions was that Tasks couldn't exist outside of the context of belonging to a User. The foreign key for userId was a mandatory part of what it meant to be a Task. There were no Tasks floating around without an owner. But what if we wanted that.  
 
-In this tutorial we will be exploring the relationship between. Users and Projects and in this case we do want Projects relationship with Users to be optional.  In other words Projects can exist and stand on their own and at the same time have the option to relate to a User in some capacity.
+In this tutorial we will be exploring the relationship between. Users and Projects and in this case we do want Projects relationship with Users to be optional. In other words, Projects can exist and stand on their own and at the same time have the option to relate to a User.
 
 Now that we are clear on the differences lets get to building.
 
 ## Creating Our App
-
-The assumption as we get started is that you have a brand new Node app and have gone through the basic configuration in the [Overview Tutorial](https://github.com/williampruden/sequelize-associations).  Also don't forget to create a new database and in your `./config/config.json` file update which database you are pointing to.  Here is a quick snapshot of what my `./config/config.json` file looks like.
+The assumption as we get started is that you have a brand new Node app and have gone through the basic configuration in the [Overview Tutorial](https://github.com/williampruden/sequelize-associations). Also don't forget to create a new database and in your `./config/config.json` update which database you are pointing to. Here is a quick snapshot of what my `./config/config.json` looks like.
 
 ```javascript
 {
@@ -282,14 +281,15 @@ function destroy(req,res) {
 module.exports = { index, create, show, update, destroy }
 ```
 
-Run following commands:
+Run the following commands:
 
 ```bash
 > sequelize model:create --name User --attributes firstName:string,lastName:string,email:string
-> sequelize model:create --name Projects --attributes title:string,complete:boolean
+> sequelize model:create --name Projects --attributes title:string,description:string,complete:boolean
 ```
 
-`./models/project.js`
+Update your `./models/project.js` to look like:
+
 ```javascript
 'use strict';
 module.exports = (sequelize, DataTypes) => {
@@ -325,7 +325,8 @@ module.exports = (sequelize, DataTypes) => {
 };
 ```
 
-`./models/user.js`
+Update your `./models/user.js` to look like:
+
 ```javascript
 'use strict';
 module.exports = function(sequelize, DataTypes) {
@@ -363,7 +364,8 @@ module.exports = function(sequelize, DataTypes) {
 };
 ```
 
-`./migrations/<timestamp>-create-project.js`
+Update your `./migrations/<timestamp>-create-project.js` to look like:
+
 ```javascript
 'use strict';
 module.exports = {
@@ -417,7 +419,8 @@ module.exports = {
 };
 ```
 
-`./migrations/<timestamp>-create-user.js`
+Update your `./migrations/<timestamp>-create-user.js` to look like:
+
 ```javascript
 'use strict';
 module.exports = {
@@ -464,14 +467,14 @@ module.exports = {
 };
 ```
 
-Notice here that really the only big difference is that when we define the relationship and foreign key we are saying `allowNull: true` instead of false like we did in the previous tutorial.
+Notice that the only real difference is that when we define the relationship and foreign key we are saying `allowNull: true` instead of false like we did in the previous tutorial.
 
 This allows the field to be left empty which means Projects can stand on their own.
 
 Go ahead and test this on your own.
-- Create a project in Postman and don't pass it a userId
-- Create a user and query the user to see the projects array is empty
-- Now update the project by adding in the userId
+- Create a project in Postman and don't pass give it a userId.
+- Create a user and query the user to see the projects array is empty.
+- Now update the project by adding in the userId.
 - Now query that same user and see the project is included in the response.
 
 ## Creating Seed Files
@@ -534,7 +537,7 @@ module.exports = {
   }
 };
 ```
-Once you have created as many user's as you need for testing purposes go ahead and run `sequelize db:seed:all` and check your GUI to see if it works.
+Once you have created as many user's as you need for testing purposes go ahead and run `sequelize db:seed:all` and check your database's GUI to see if it worked.
 
 If you need to undo the seed file you have these two commands available to you.
 
