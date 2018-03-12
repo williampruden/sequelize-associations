@@ -23,10 +23,6 @@ module.exports = {
           isEmail: true
         }
       },
-      bio: {
-        type: Sequelize.TEXT,
-        allowNull: false
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

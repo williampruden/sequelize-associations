@@ -19,7 +19,6 @@ function create(req,res) {
   User.create({
     firstName: req.body.firstName,
     lastName: req.body.lastName,
-    bio: req.body.bio,
     email: req.body.email
   })
   .then((user) => {

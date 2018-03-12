@@ -186,7 +186,7 @@ If you make a mistake you have a few options:
 - Create a new migration by running `sequelize migration:generate` and in the new migration correct your error then run `sequelize db:migrate`
 - Rollback your last migration with `sequelize db:migrate:undo`, edit the migration and then re-run `sequelize db:migrate`
 - Rollback all of your migrations with `sequelize db:migrate:undo:all` and start from scratch. Use `sequelize db:migrate:undo:all` with caution as it cleans house.
-- For more on migration commands check out [the docs](https://github.com/sequelize/cli#documentation).
+- For more on migration commands check out [the docs](https://github.com/sequelize/cli#usage).
 
 ## Establishing Associations
 Now that our User is complete lets create our Task and establish the associations between the two.
@@ -387,7 +387,7 @@ app.use('/tasks', tasks);
 ```javascript
 const { User, Task } = require('../models/')
 
-... 
+...
 
 function create(req,res) {
   User.create({
@@ -636,7 +636,7 @@ function destroy(req,res) {
       if (!task) {
         return res.status(400).json({ message: 'Task Not Found' });
       }
-      
+
       task.destroy()
         .then((task) => {
           return res.status(200).json(task)

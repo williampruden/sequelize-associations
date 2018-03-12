@@ -45,6 +45,6 @@ module.exports = {
     });
   },
   down: function(queryInterface, Sequelize) {
-    return queryInterface.dropTable('Tasks');
+    return queryInterface.dropTable('Projects');
   }
 };

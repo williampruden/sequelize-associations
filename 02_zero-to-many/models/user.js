@@ -15,10 +15,6 @@ module.exports = function(sequelize, DataTypes) {
       validate: {
         isEmail: true
       }
-    },
-    bio: {
-      type: DataTypes.TEXT,
-      allowNull: false
     }
   }, {
   paranoid: true
