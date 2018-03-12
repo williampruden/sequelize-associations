@@ -1,5 +1,3 @@
-<img src="https://i.imgur.com/ogvwCET.gif" />
-
 # One to Many
 In this tutorial we will be:
 - [Creating models](https://github.com/williampruden/sequelize-associations/tree/master/01_one-to-many#creating-models)
@@ -408,7 +406,7 @@ function create(req,res) {
 ```
 Its important to require our models at the top of our controller file so we can access all the methods that Sequelize gives us access to.  In this example we are taking the request body that is passed in and creating a new instance of a User. My postman looks something like this:
 
-<img src="https://i.imgur.com/vkjtDfZ.gif" align="center" />
+<img src="https://i.imgur.com/YFOILjE.gif" />
 
 ### Listing All Users
 
@@ -476,7 +474,7 @@ function create(req,res) {
 ```
 If you attempt to create a task without a userId it should throw an error.  If you remember in our migration and Task model we stated `allowNull: false`.  This means that a task can not float around in our database without belonging to a user.  As we create this task lets set the userId to the user we just created.
 
-<img src="https://i.imgur.com/2ES6OR1.gif" align="center" />
+<img src="https://i.imgur.com/ogvwCET.gif" />
 
 ### Listing All Tasks
 
@@ -628,7 +626,7 @@ function destroy(req,res) {
     });
 }
 ```
-<img src="https://i.imgur.com/3TtvUNc.gif" align="center" />
+<img src="https://i.imgur.com/LOJW446.gif" />
 
 Notice here that if we check our database the record still exists.  What has changed though is that `deletedAt` has been given a timestamp and if you try to query that specific user it will tell you they no longer exist.
 

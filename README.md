@@ -217,7 +217,7 @@ if (config.use_env_variable) {
 
 Now all we need to do is create a DB and establish our connection. If PostgreSQL is installed you should be able to run the command `createdb sql-otm-dev` and this will create our db `sql-otm-dev`.  If you have [Postico](https://eggerapps.at/postico/) working then you can also create a DB this way.
 
-<img src="https://i.imgur.com/1dl9btC.gif" align="center" />
+<img src="https://i.imgur.com/baaL7Ai.gif" />
 
 The last step is to establish a connection with the database by adding the following code to the bottom of our `server.js` file.
 
@@ -242,6 +242,6 @@ models.sequelize
 
 Now if we run `npm start` it should look something like this.
 
-**GIPHY HERE**
+<img src="https://i.imgur.com/pY8aCBx.gif" />
 
 Success! We have a PostgreSQL DB hooked up to our Node/Express application. In the coming tutorials we will explore how to create models, migrations, seeders, how to establish associations, and then query based on those associations. Sounds fun doesn't it? Let's head on over to [One-To-Many Tutorial](https://github.com/williampruden/sequelize-associations/tree/master/01_one-to-many) to learn more!
