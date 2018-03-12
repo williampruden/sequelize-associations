@@ -406,8 +406,6 @@ function create(req,res) {
 ```
 Its important to require our models at the top of our controller file so we can access all the methods that Sequelize gives us access to.  In this example we are taking the request body that is passed in and creating a new instance of a User. My postman looks something like this:
 
-![Create User](https://i.imgur.com/MKKvRCU.gif)
-
 ### Listing All Users
 
 `./controllers/user-controller.js`
