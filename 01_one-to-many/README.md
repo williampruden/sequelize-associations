@@ -1,3 +1,5 @@
+<img src="https://i.imgur.com/vkjtDfZ.gif" />
+
 # One to Many
 In this tutorial we will be:
 - [Creating models](https://github.com/williampruden/sequelize-associations/tree/master/01_one-to-many#creating-models)
