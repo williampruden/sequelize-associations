@@ -6,9 +6,9 @@ function index(req,res) {
       model: Recipe,
       as: 'recipes',
       attributes: ['title', 'description', 'instructions'],
-      // through: {
-      //   attributes: []
-      // }
+      through: {
+        attributes: ['meassurementAmount', 'meassurementType']
+      }
     }]
   })
   .then((ingredient) => {
@@ -37,9 +37,9 @@ function show(req,res) {
       model: Recipe,
       as: 'recipes',
       attributes: ['title', 'description', 'instructions'],
-      // through: {
-      //   attributes: []
-      // }
+      through: {
+        attributes: ['meassurementAmount', 'meassurementType']
+      }
     }]
   })
     .then((ingredient) => {

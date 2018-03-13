@@ -15,7 +15,6 @@ function index(req,res) {
     return res.status(200).json(recipe)
   })
   .catch((error) => {
-    console.log("ERRRRORORORORORORRR: ", error);
     return res.status(400).json(error)
   });
 }
@@ -116,7 +115,6 @@ function addIngredientToRecipe(req, res) {
           return res.status(200).json(response)
         })
         .catch((error) => {
-          console.log("ERRRRORORORORORORRR: ", error);
           return res.status(400).json(error)
         });
     })
