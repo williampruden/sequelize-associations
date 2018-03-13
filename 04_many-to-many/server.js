@@ -6,8 +6,8 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const models = require('./models/');
 
-const teachers = require('./routes/teachers');
-const students = require('./routes/students');
+const recipes = require('./routes/recipes');
+const ingredients = require('./routes/ingredients');
 
 const app = express();
 
@@ -17,8 +17,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/teachers', teachers);
-app.use('/students', students);
+app.use('/recipes', recipes);
+app.use('/ingredients', ingredients);
 
 models.sequelize
   .authenticate()
