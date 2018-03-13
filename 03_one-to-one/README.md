@@ -1,17 +1,18 @@
-# One to One
+# One-to-One
 In this tutorial we will be:
-- [Looking at When to use One to One relationships.]()
+- [Looking at When to use One-to-One relationships.]()
 - [Create Our App.]()
 
-## When to use One to One Relationships
-It can be a bit of a tricky question.  Often times if we have a One-to-One relationship the thought of combining the data into one model follows shortly after. So when should we establish the these types of relationships? The answer as you may have guessed is a bit more artistic than dogmatic. A few scenarios I've come across:
+## When to use One-to-One Relationships
+It can be a bit of a tricky question.  Often times if we have a One-to-One relationship the thought of combining the data into one model follows shortly after. So when should we establish these types of relationships? The answer as you may have guessed is a bit more artistic than dogmatic. A few scenarios I've come across:
 
-  - **Efficiency/Sparseness:** I have 10 million users in my database but less than 1% of them need to ever provide certain data about themselves (lets say its medical disability data). The space you could save by breaking that data out into its own table is worth establishing the One(orZero) to One relationship.
-  - **Auditing:** I have a User table with 25 columns and each user must have an address associated with them which makes up 6 of those 25. A business requirement comes across your desk saying you must audit the address data for the users. Or in other words if the user updates their address we want to know what the previous data used to be. This would be a good example of when to break the address data for the user into a new table and establish that relationship. Now we can audit that entire table rather than auditing the entire User table for just those rows.
-  - **Restrictions:** I'm making a piece of software for accountants and want them to only have write and read access to certain data. For example they shouldn't be able to change dollar amounts, account numbers, or dates. If they make a mistake they must create a corrective record to add to the ledger. Other data in this app can be updated and deleted. This would be a good example of when to create a One to One relationship so that different constraints can be applied to different tables.
+  - **Efficiency/Sparseness:** I have 10 million users in my database but less than 1% of them need to ever provide certain data about themselves (lets say its medical disability data). The space you could save by breaking that data out into its own table is worth establishing the One(or Zero)-to-One relationship.
+  - **Auditing:** I have a User table with 25 columns and each user must have an address associated with them which makes up 6 of those 25. A business requirement comes across my desk saying I must audit the address data for the users. In other words if the User updates their address we want to know what the previous data used to be and keep a record of changes. This would be a good example of when to break the address data for the User into a new table and establish a One-to-One relationship. Now we can audit that entire table rather than auditing the entire User table for just 6 columns.
+  - **Restrictions:** I'm making a piece of software for accountants and want them to only have write and read access to certain data. For example they shouldn't be able to change dollar amounts, account numbers, or dates. If they make a mistake they must create a corrective record to add to the ledger. Other data in this app can have full CRUD access. This would be a good example of when to create a One-to-One relationship so that different constraints can be applied to different tables.
+  - **You're The Artist:** Those are just a few examples I've come across but in no way is this an exhaustive list. As you build your apps consider ways that a One-To-One might benefit what you are trying to accomplish and use appropriately.
 
 ## Creating Our App
-We are going to create an app where Users have a One-To-One relationship with Passports. The assumption as we get started is that you have a brand new Node app and have gone through the basic configuration in the [Overview Tutorial](https://github.com/williampruden/sequelize-associations). Also don't forget to create a new database and in your `./config/config.json` update which database you are pointing to. Here is a quick snapshot of what my `./config/config.json` looks like.
+We are going to create an app where Users have a One-to-One relationship with Passports. The assumption as we get started is that you have a brand new Node app and have gone through the basic configuration in the [Overview Tutorial](https://github.com/williampruden/sequelize-associations). Also don't forget to create a new database and in your `./config/config.json` update which database you are pointing to. Here is a quick snapshot of what my `./config/config.json` looks like.
 
 ```javascript
 {
@@ -472,7 +473,7 @@ module.exports = {
 ```
 Don't forget to `sequelize db:migrate`!
 
-The reason we placed the userId as our foreign key in the Passport model was in attempt to make it optional data.  Who knows what app we are going to end up building here but I would imagine that not every User would need to have a Passport.  Since its "optional" or "sparse" data we can create that one to one relationship in order to save space and create efficiency.
+The reason we placed the `userId` as our foreign key in the Passport model was in an attempt to make it optional data.  Who knows what app we are going to end up building here but I would imagine that not every User would need to have a Passport.  Since its "optional" or "sparse" data we can create that One-to-One relationship in order to save space and create efficiency.
 
 Go ahead and test this on your own.
 - Create a User in Postman.
