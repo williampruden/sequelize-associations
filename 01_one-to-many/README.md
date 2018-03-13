@@ -650,3 +650,5 @@ function destroy(req,res) {
     });
 }
 ```
+
+Thats it for One-To-Many! See you over at [Zero-To-Many](https://github.com/williampruden/sequelize-associations/tree/master/02_zero-to-many) for more on all things Sequelize!

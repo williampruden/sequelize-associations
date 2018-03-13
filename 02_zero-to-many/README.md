@@ -285,7 +285,7 @@ Run the following commands:
 
 ```bash
 > sequelize model:create --name User --attributes firstName:string,lastName:string,email:string
-> sequelize model:create --name Projects --attributes title:string,description:string,complete:boolean
+> sequelize model:create --name Project --attributes title:string,description:string,complete:boolean
 ```
 
 Update your `./models/project.js` to look like:
@@ -466,6 +466,7 @@ module.exports = {
   }
 };
 ```
+Don't forget to `sequelize db:migrate`!
 
 Notice that the only real difference is that when we define the relationship and foreign key we are saying `allowNull: true` instead of false like we did in the previous tutorial.
 

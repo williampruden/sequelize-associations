@@ -16,7 +16,7 @@ function create(req,res) {
     passportNumber: req.body.passportNumber,
     issueDate: req.body.issueDate,
     expirationDate: req.body.expirationDate,
-    passportId: req.body.passportId
+    userId: req.body.userId
   })
   .then((passport) => {
     return res.status(200).json(passport)
