@@ -188,7 +188,13 @@ Update your `./controllers/ingredient-controller.js` to look like:
 const { Recipe, Ingredient } = require('../models/')
 
 function index(req,res) {
-
+  Ingredient.findAll()
+  .then((ingredient) => {
+    return res.status(200).json(ingredient)
+  })
+  .catch((error) => {
+    return res.status(400).json(error)
+  });
 }
 
 function create(req,res) {
@@ -204,7 +210,17 @@ function create(req,res) {
 }
 
 function show(req,res) {
+  Ingredient.findById(req.params.id)
+    .then((ingredient) => {
+      if (!ingredient) {
+        return res.status(404).json({ message: 'Ingredient Not Found' });
+      }
 
+      return res.status(200).json(ingredient);
+    })
+    .catch((error) => {
+      return res.status(400).json(error)
+    });
 }
 
 function update(req,res) {
@@ -238,12 +254,12 @@ function destroy(req,res) {
       }
 
       ingredient.destroy()
-        .then((ingredient) => {
-          return res.status(200).json(ingredient)
-        })
-        .catch((error) => {
-          return res.status(400).json(error)
-        });
+      .then((ingredient) => {
+        return res.status(200).json(ingredient)
+      })
+      .catch((error) => {
+        return res.status(400).json(error)
+      });
     })
     .catch((error) => {
       return res.status(400).json(error)
@@ -350,12 +366,262 @@ module.exports = (sequelize, DataTypes) => {
   return RecipeIngredient;
 };
 ```
+Theres a lot to discuss in the last three code blocks above so lets break things down.
 
-<!-- More info about how the relationships are described above  -->
+`belongsToMany` is how we establish the relationship between Recipes and Ingredients `through` the Junction Table named RecipeIngredient. As you probably already noticed we also have a model for that Junction Table.  Typically that model would only have attributes for the foreign keys but in our case we have additional data we wish to store about each relationship.  More specifically we are interested in the `meassurementType` and `meassurementAmount` for each relationship.  Its not enough to know that our recipe requires chicken.  I want to know that it requires 3 pounds of chicken.
+
+Update your `./migrations/<timestamp>-create-recipe.js` to look like:
+
+```javascript
+'use strict';
+module.exports = {
+  up: function(queryInterface, Sequelize) {
+    return queryInterface.createTable('Recipes', {
+      id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: Sequelize.INTEGER
+      },
+      title: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      description: {
+        type: Sequelize.TEXT,
+        allowNull: false
+      },
+      instructions: {
+        type: Sequelize.TEXT,
+        allowNull: false
+      },
+      createdAt: {
+        allowNull: false,
+        type: Sequelize.DATE
+      },
+      updatedAt: {
+        allowNull: false,
+        type: Sequelize.DATE
+      },
+      deletedAt: {
+        allowNull: true,
+        type: Sequelize.DATE
+      }
+    });
+  },
+  down: function(queryInterface, Sequelize) {
+    return queryInterface.dropTable('Recipes');
+  }
+};
+```
+
+Update your `./migrations/<timestamp>-create-ingredient.js` to look like:
+
+```javascript
+'use strict';
+module.exports = {
+  up: function(queryInterface, Sequelize) {
+    return queryInterface.createTable('Ingredients', {
+      id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: Sequelize.INTEGER
+      },
+      name: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      createdAt: {
+        allowNull: false,
+        type: Sequelize.DATE
+      },
+      updatedAt: {
+        allowNull: false,
+        type: Sequelize.DATE
+      },
+      deletedAt: {
+        allowNull: true,
+        type: Sequelize.DATE
+      }
+    });
+  },
+  down: function(queryInterface, Sequelize) {
+    return queryInterface.dropTable('Ingredients');
+  }
+};
+```
+
+Update your `./migrations/<timestamp>-create-recipeingredient.js` to look like:
+
+```javascript
+'use strict';
+module.exports = {
+  up: function(queryInterface, Sequelize) {
+    return queryInterface.createTable('RecipeIngredients', {
+      id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: Sequelize.INTEGER
+      },
+      recipeId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Recipes',
+          key: 'id',
+          as: 'recipes'
+        }
+      },
+      ingredientId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Ingredients',
+          key: 'id',
+          as: 'ingredients'
+        }
+      },
+      meassurementAmount: {
+        type: Sequelize.INTEGER,
+        allowNull: false
+      },
+      meassurementType: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      createdAt: {
+        allowNull: false,
+        type: Sequelize.DATE
+      },
+      updatedAt: {
+        allowNull: false,
+        type: Sequelize.DATE
+      },
+      deletedAt: {
+        allowNull: true,
+        type: Sequelize.DATE
+      }
+    });
+  },
+  down: function(queryInterface, Sequelize) {
+    return queryInterface.dropTable('RecipeIngredients');
+  }
+};
+```
+Nothing too shocking about the way these migrations are laid out after taking a deeper look at the models.
 
 ## Querying Shared Data
+Couple new concepts being introduced here as we explore querying through our Junction Table. The `attributes` concept we are about to see can be applied to all of our previous tutorials while `through` is a bit more specific to the Many-to-Many relationship. Enough talk lets see some code.
 
+### Listing All Recipes
+
+Add the following code to your `./controllers/recipe-controller.js`:
+```javascript
+function index(req,res) {
+  Recipe.findAll({
+    include: [{
+      model: Ingredient,
+      as: 'ingredients',
+      attributes: ['name'],
+      through: {
+        attributes: []
+      }
+    }],
+  })
+  .then((recipe) => {
+    return res.status(200).json(recipe)
+  })
+  .catch((error) => {
+    return res.status(400).json(error)
+  });
+}
+```
+
+As you can see here we are using `include` to get our ingredients and we are using the new `attributes` modifier to be specific about what we want from ingredients. I encourage you to run some queries with this and without this to see the difference for yourself.  You should see the possibilities available to you rather quickly.  Other thing to note here is the new `through` modifier thats shown up.  It allows us to request additional information about the relationship if there is any.  In our case we have `meassurementType` and `meassurementAmount` available to us but we will not need either for this more generic query. Lets take a look at the `show` function to utilize the power of `through`.
+
+### Listing One Recipes
+Add the following code to your `./controllers/recipe-controller.js`:
+
+```javascript
+function show(req,res) {
+  Recipe.findById(req.params.id, {
+      include: [{
+        model: Ingredient,
+        as: 'ingredients',
+        attributes: ['name'],
+        through: {
+          attributes: ['meassurementAmount', 'meassurementType']
+        }
+      }]
+    })
+    .then((recipe) => {
+      if (!recipe) {
+        return res.status(404).json({ message: 'Recipe Not Found' });
+      }
+
+      return res.status(200).json(recipe);
+    })
+    .catch((error) => {
+      res.status(400).json(error)
+    });
+}
+```
+
+As you can see here we want those additional pieces of information so we have gone ahead and included them into our `attributes` inside of `through`.  Run the query and you can see them show up.  Play around with different versions of this so you can see how they work and get a stronger sense of whats possible.
 
 ## Creating A New Relationship
 
-Incredibly helpful tutorial and many thanks to https://github.com/josie11/Sequelize-Association-Example/blob/master/server/index.js
+Now that we know how to query the data when its there its important to understand how to establish those relationships inside of the join table.  For this we need to understand some more of the methods that Sequelize provides us with.  In our case every instance of `recipe` has quite a few new methods available to us but we are going to look at just 2, `getIngredients()` and `addIngredient()`.  For more on all the methods available please refer to [the docs](http://docs.sequelizejs.com/class/lib/associations/belongs-to-many.js~BelongsToMany.html).
+
+In one of our recipe queries if we ever want to produce a list of the ingredients associated with it we can now say something like `recipe.getIngredients()` which will return that list.  If we ever want to add a new ingredient to an existing recipe we can say something like `recipe.addIngredient(...)` and it will create that relationship.  Lets see this in action.
+
+Go ahead and add a new function at the bottom of your `./controllers/recipe-controller.js`:
+
+```javascript
+function addIngredientToRecipe(req, res) {
+  Recipe.findById(req.params.recipeId)
+    .then((recipe) => {
+      if (!recipe) {
+        return res.status(400).json({ message: 'Recipe Not Found' });
+      }
+
+      recipe.addIngredient(req.params.ingredientId, {
+        through: {
+          meassurementAmount: req.body.meassurementAmount,
+          meassurementType: req.body.meassurementType
+        }
+      })
+        .then((response) => {
+          return res.status(200).json(response)
+        })
+        .catch((error) => {
+          return res.status(400).json(error)
+        });
+    })
+    .catch((error) => {
+      return res.status(400).json(error)
+    });
+}
+
+module.exports = { index, create, show, update, destroy, addIngredientToRecipe }
+```
+
+Also you will need to add the following route in your `./routes/recipes.js` file:
+
+```javascript
+...
+router.post('/:recipeId/ingredients/:ingredientId', recipeController.addIngredientToRecipe);
+
+module.exports = router;
+```
+
+A lot is going on here so lets break it down.
+- We are using the route param `recipeId` to first query our DB and find the recipe.
+- Once we have the instance of the recipe we were looking for we will use `.addIngredient()` method to add the ingredient found in the route param under `ingredientId`.
+- At the same time we have the option to pass in the additional data we need to help describe this new relationship with the `through` object.
+
+Once you have this working go ahead and query your data to make sure the new relationships are working as intended.
+
+Well that brings us to the end of this 5 part tutorial. There are a few relationships we didn't explore but given the topics we have gone over I'm confident that you can make them work on your own. If you have any questions or thoughts feel free to shoot me an email at: williamprudeniv@gmail.com.
+
+Best of luck and happy coding!

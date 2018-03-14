@@ -7,7 +7,7 @@ function index(req,res) {
       as: 'ingredients',
       attributes: ['name'],
       through: {
-        attributes: ['meassurementAmount', 'meassurementType']
+        attributes: []
       }
     }],
   })
@@ -122,6 +122,5 @@ function addIngredientToRecipe(req, res) {
       return res.status(400).json(error)
     });
 }
-
 
 module.exports = { index, create, show, update, destroy, addIngredientToRecipe }

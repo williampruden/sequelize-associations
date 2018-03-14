@@ -1,16 +1,7 @@
 const { Recipe, Ingredient } = require('../models/')
 
 function index(req,res) {
-  Ingredient.findAll({
-    include: [{
-      model: Recipe,
-      as: 'recipes',
-      attributes: ['title', 'description', 'instructions'],
-      through: {
-        attributes: ['meassurementAmount', 'meassurementType']
-      }
-    }]
-  })
+  Ingredient.findAll()
   .then((ingredient) => {
     return res.status(200).json(ingredient)
   })
@@ -32,16 +23,7 @@ function create(req,res) {
 }
 
 function show(req,res) {
-  Ingredient.findById(req.params.id, {
-    include: [{
-      model: Recipe,
-      as: 'recipes',
-      attributes: ['title', 'description', 'instructions'],
-      through: {
-        attributes: ['meassurementAmount', 'meassurementType']
-      }
-    }]
-  })
+  Ingredient.findById(req.params.id)
     .then((ingredient) => {
       if (!ingredient) {
         return res.status(404).json({ message: 'Ingredient Not Found' });
