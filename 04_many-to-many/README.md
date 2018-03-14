@@ -514,7 +514,6 @@ Nothing too shocking about the way these migrations are laid out after taking a 
 Couple new concepts being introduced here as we explore querying through our Junction Table. The `attributes` concept we are about to see can be applied to all of our previous tutorials while `through` is a bit more specific to the Many-to-Many relationship. Enough talk lets see some code.
 
 ### Listing All Recipes
-
 Add the following code to your `./controllers/recipe-controller.js`:
 ```javascript
 function index(req,res) {
@@ -539,7 +538,7 @@ function index(req,res) {
 
 As you can see here we are using `include` to get our ingredients and we are using the new `attributes` modifier to be specific about what we want from ingredients. I encourage you to run some queries with this and without this to see the difference for yourself.  You should see the possibilities available to you rather quickly.  Other thing to note here is the new `through` modifier thats shown up.  It allows us to request additional information about the relationship if there is any.  In our case we have `meassurementType` and `meassurementAmount` available to us but we will not need either for this more generic query. Lets take a look at the `show` function to utilize the power of `through`.
 
-### Listing One Recipes
+### Listing One Recipe
 Add the following code to your `./controllers/recipe-controller.js`:
 
 ```javascript
@@ -570,7 +569,6 @@ function show(req,res) {
 As you can see here we want those additional pieces of information so we have gone ahead and included them into our `attributes` inside of `through`.  Run the query and you can see them show up.  Play around with different versions of this so you can see how they work and get a stronger sense of whats possible.
 
 ## Creating A New Relationship
-
 Now that we know how to query the data when its there its important to understand how to establish those relationships inside of the join table.  For this we need to understand some more of the methods that Sequelize provides us with.  In our case every instance of `recipe` has quite a few new methods available to us but we are going to look at just 2, `getIngredients()` and `addIngredient()`.  For more on all the methods available please refer to [the docs](http://docs.sequelizejs.com/class/lib/associations/belongs-to-many.js~BelongsToMany.html).
 
 In one of our recipe queries if we ever want to produce a list of the ingredients associated with it we can now say something like `recipe.getIngredients()` which will return that list.  If we ever want to add a new ingredient to an existing recipe we can say something like `recipe.addIngredient(...)` and it will create that relationship.  Lets see this in action.
@@ -622,6 +620,6 @@ A lot is going on here so lets break it down.
 
 Once you have this working go ahead and query your data to make sure the new relationships are working as intended.
 
-Well that brings us to the end of this 5 part tutorial. There are a few relationships we didn't explore but given the topics we have gone over I'm confident that you can make them work on your own. If you have any questions or thoughts feel free to shoot me an email at: williamprudeniv@gmail.com.
+Well that brings us to the end of this 5 part tutorial. There are a few relationships we didn't explore but given the topics we have gone over I'm confident that you can make them work on your own. If you have any questions or thoughts feel free to shoot me an email at: **williamprudeniv@gmail.com**.
 
 Best of luck and happy coding!
