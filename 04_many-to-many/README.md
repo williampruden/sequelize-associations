@@ -37,8 +37,7 @@ The assumption as we get started is that you have a brand new Node app and have 
 Since we went into great detail on how to create models, controllers and migrations in the [One-To-Many](https://github.com/williampruden/sequelize-associations/tree/master/01_one-to-many) we are going to move kind of quickly through that content here.
 
 ## Querying Shared Data
-
-
+ 
 
 ## Creating A New Relationship
 
