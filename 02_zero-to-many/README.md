@@ -72,7 +72,6 @@ models.sequelize
   });
 
 module.exports = app;
-
 ```
 
 Create `./routes/projects.js` to look like:
