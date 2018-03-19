@@ -1,9 +1,9 @@
 # Many To Many
 In this tutorial we will be:
-- [Understanding Junction Tables.]()
-- [Create Our App]()
-- [How To Query Shared Data]()
-- [Creating A New Relationship]()
+- [Understanding Junction Tables.](https://github.com/williampruden/sequelize-associations/tree/master/04_many-to-many#understanding-junction-tables)
+- [Create Our App](https://github.com/williampruden/sequelize-associations/tree/master/04_many-to-many#creating-our-app)
+- [How To Query Shared Data](https://github.com/williampruden/sequelize-associations/tree/master/04_many-to-many#querying-shared-data)
+- [Creating A New Relationship](https://github.com/williampruden/sequelize-associations/tree/master/04_many-to-many#creating-a-new-relationship)
 
 ## Understanding Junction Tables
 When dealing with Many to Many relationships we need a Junction (or as I like to call it Mapping) Table to map (see what I did there?) together the relationships between both of our models. For example lets pretend we are building an app for a High School and we need to define the relationship between Teachers and Students. Well Teachers obviously teach more than one Student and I don't know about your high school but I had around 6-7 different teachers at a time. It wouldn't make sense to store the foreign key on either model so we need to create a Junction table called TeacherStudents that will keep track of those relationships. In this case every row will have 2 pieces of data, studentId and teacherId. One row represents one relationship. Behind the scenes sequelize will use this TeacherStudents table and allow us to access data we need. Sequelize will also supply us with some helper methods that we can utilize to create new relationships and we will explore some of these later.
