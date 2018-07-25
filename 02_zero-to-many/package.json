@@ -2,9 +2,6 @@
   "name": "sequelize--zero-to-many",
   "version": "1.0.0",
   "author": "William Pruden",
-  "engines": {
-    "node": "8.9.4"
-  },
   "scripts": {
     "start": "node ./bin/www"
   },
@@ -14,7 +11,7 @@
     "debug": "~2.2.0",
     "express": "~4.13.4",
     "morgan": "~1.7.0",
-    "pg": "6.4.1",
+    "pg": "7.4.3",
     "pg-hstore": "^2.3.2",
     "sequelize": "^4.35.0",
     "serve-favicon": "~2.3.0"
